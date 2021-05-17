@@ -1,4 +1,4 @@
-# UGA-PROG5 Projet 
+# En Garde
 
 Pour avoir une bonne gestion du projet et du dev de chacun, on va travailler avec des branches de developpement.
 
