@@ -27,7 +27,7 @@ public class Manche {
         int taille = j.main.size();
         int res = 0;
         if(taille <5){
-            res = (int)piocheCartes.get(0);
+            res = piocheCartes.get(0);
             piocheCartes.remove(0);
 
         }
