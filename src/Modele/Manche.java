@@ -4,6 +4,7 @@ import Controller.*;
 //import
 
 public class Manche {
+    Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     int[] grilleJeu;
     int tourJoueur;
@@ -13,6 +14,7 @@ public class Manche {
     public Manche(){
 
         initialiserPioche();
+
         grilleJeu = new int [23];
         //Situation du joueur 1 au début de la partie
         grilleJeu[0] = 1;
@@ -65,6 +67,11 @@ public class Manche {
 
     }
 
+    public Coup joue()
+    {
+        return null;
+    }
+
     public int getTourJoueur(){ return tourJoueur;}
 
     public boolean estJ1(int nb){
@@ -77,6 +84,18 @@ public class Manche {
 
     public boolean estVide(int nb){
         return grilleJeu[nb] == 0;
+    }
+
+    public JoueurHumain Joueur(int numJoueur)
+    {
+        if(numJoueur == 1)
+        {
+            return joueur1;
+        }
+        else
+        {
+            return joueur2;
+        }
     }
 
 }

@@ -1,18 +1,26 @@
 package Modele;
 
+import Controller.JoueurHumain;
 import Patterns.Observable;
 
 public class Partie {
     boolean J1Gagnant, J2Gagnant;
     int J1Point, J2Point;
+    Jeu jeu;
     Manche courant;
+    JoueurHumain joueur1, joueur2;
 
-    public Partie(){
+    public Partie(Jeu j){
+        jeu = j;
         initialisePartie();
+
     }
 
     public void initialisePartie(){
-        courant = new Manche();
+
+        joueur1 = new JoueurHumain(jeu);
+        joueur2 = new JoueurHumain(jeu);
+        courant = new Manche(this);
         J1Gagnant = false;
         J2Gagnant = false;
         J1Point = 0;
@@ -41,6 +49,24 @@ public class Partie {
 
     public int getJ2Point(){
         return J2Point;}
+
+    public JoueurHumain Joueur(int numJoueur)
+    {
+        if(numJoueur == 1)
+        {
+            return joueur1;
+        }
+        else
+        {
+            return joueur2;
+        }
+    }
+
+    public Manche manche()
+    {
+        return  courant;
+    }
+
 
 
 }

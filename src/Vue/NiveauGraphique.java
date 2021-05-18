@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {
@@ -15,6 +16,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurCase, hauteurLuke, hauteurVador, largeurVador;
     Image[] joueurs1;
     Image[] joueurs2;
+    Image carte1, carte2, carte3, carte4, carte5;
     Random r;
 
     private Image chargeImage(String nom){
@@ -45,6 +47,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
         randomDecors();
         teteJ1 = chargeImage("Luke_Head");
         teteJ2 = chargeImage("Vador_Head");
+
+        carte1 = chargeImage("Card_1_selected");
+        carte2 = chargeImage("Card_2");
+        carte3 = chargeImage("Card_3");
+        carte4 = chargeImage("Card_4");
+        carte5 = chargeImage("Card_5");
+
 
         joueurs1 = new Image[4];
         joueurs2 = new Image[4];
@@ -88,6 +97,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
                 drawable.drawImage(joueur2, x, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), largeurVador, hauteurVador, null);
             }
         }
+
+        if(jeu.partie().manche().getTourJoueur() == 1)
+        {
+            afficheMainJoueur(jeu.partie().manche().Joueur(1), drawable);
+        }
+
+
 
     }
 

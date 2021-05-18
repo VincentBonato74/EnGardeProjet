@@ -1,6 +1,6 @@
 package Modele;
 
-public class Coup {
+public class Coup extends Commande {
     Manche manche;
     int[] mapAvant;
 
@@ -14,12 +14,12 @@ public class Coup {
         manche = m;
     }
 
-    public void execute()
+    public void execute(Coup cp)
     {
 
     }
 
-    public void desexecute()
+    public void desexecute(Coup cp)
     {
 
     }

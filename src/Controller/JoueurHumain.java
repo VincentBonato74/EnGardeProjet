@@ -7,12 +7,13 @@ import java.util.List;
 
 public class JoueurHumain {
     Jeu jeu;
-    Manche manche;
-    public List main;
+    public ArrayList<Integer> main= new ArrayList<>();
+    public int position;
+    public int direction;
 
-    JoueurHumain(Jeu j){
+    public JoueurHumain(Jeu j){
         jeu = j;
-        main = new ArrayList();
+
     }
 
     public boolean joue(int l, int c){
