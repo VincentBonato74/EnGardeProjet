@@ -1,5 +1,6 @@
 package Vue;
 
+import Controller.JoueurHumain;
 import Modele.Jeu;
 import Patterns.Observateur;
 
@@ -117,5 +118,51 @@ public class NiveauGraphique extends JComponent implements Observateur {
         joueur1 = joueurs1[etape];
         joueur2 = joueurs2[etape];
         metAJour();
+    }
+
+    public void afficheMainJoueur(JoueurHumain j, Graphics2D drawable){
+        /*List mainJoueur = new ArrayList();
+        mainJoueur = j.getMain();
+        int largeurCarte =
+        */
+
+
+
+        int largeurCarte = (int) Math.round(largeur * 0.37)/5;
+        int hauteurCarte = (int) Math.round(hauteur * 0.20);
+
+        int nbCartes = j.main.size();
+
+        int x = (largeur/2)-((nbCartes*largeurCarte)/2)-largeurCarte;
+        int y = (int) Math.round(hauteur * 0.75);
+
+
+        for(int i = 0; i < j.main.size(); i++){
+
+            int valeurCarte = j.main.get(i);
+
+            x = x+largeurCarte;
+
+            switch(valeurCarte) {
+                case 1:
+                    drawable.drawImage(carte1, x , y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 2:
+                    drawable.drawImage(carte2, x , y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 3:
+                    drawable.drawImage(carte3, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 4:
+                    drawable.drawImage(carte4, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 5:
+                    drawable.drawImage(carte5, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+
+            }
+        }
+
+
     }
 }

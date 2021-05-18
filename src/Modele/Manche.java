@@ -11,8 +11,15 @@ public class Manche {
     JoueurHumain joueur1,joueur2;
 
 
-    public Manche(){
+    public Manche(Partie p){
 
+        partie = p;
+
+        //Les joueurs de la partie associés à la manche
+        joueur1 = partie.Joueur(1);
+        joueur2 = partie.Joueur(2);
+
+        //Initialiser la pioche de la manche
         initialiserPioche();
 
         grilleJeu = new int [23];
