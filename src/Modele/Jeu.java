@@ -7,15 +7,25 @@ public class Jeu extends Observable {
 
     public Jeu()
     {
-        initializePartie();
+        initialisePartie();
     }
 
-    public void initializePartie(){
+    public void initialisePartie(){
         courant = new Partie();
         miseAJour();
     }
 
     public Partie partie() {
         return courant;
+    }
+
+    public void jouerCoup(Coup cp) {
+        if (cp == null) {
+            System.out.println("Salut");
+            //Configuration.instance().logger().info("Déplacement impossible");
+        } else {
+            courant.jouerCoup(cp);
+            miseAJour();
+        }
     }
 }
