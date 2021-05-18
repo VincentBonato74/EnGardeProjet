@@ -10,12 +10,11 @@ import java.io.InputStream;
 
 public class NiveauGraphique extends JComponent implements Observateur {
     Jeu jeu;
-    Image j1, j2, sol;
+    Image j1, j2, sol, tatooine;
     int largeur, hauteur, nbColonnes, largeurCase, hauteurCase, hauteurLuke, hauteurVador, largeurVador;
 
     private Image chargeImage(String nom){
         Image img = null;
-
         InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(nom + ".png");
         try{
             img = ImageIO.read(in);
@@ -32,6 +31,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         sol = chargeImage("Sol");
         j1 = chargeImage("Luke_1_0");
         j2 = chargeImage("Vador_1_0");
+        tatooine = chargeImage("tatooine");
     }
 
     public void paintComponent(Graphics g){
@@ -46,9 +46,11 @@ public class NiveauGraphique extends JComponent implements Observateur {
         hauteurVador = (int)Math.round(largeurCase * 1.94);
         largeurVador = (int)Math.round(largeurCase * 1.50);
 
+        drawable.drawImage(tatooine, 0, 0, largeur, hauteur, null);
+
         for(int c = 0; c < 23; c++){
             int x = c * largeurCase;
-            int y = (int) Math.round(hauteur * 0.5);
+            int y = (int) Math.round(hauteur * 0.62);
             drawable.drawImage(sol, x, y, largeurCase, hauteurCase, null);
             if(c == 0){
                 drawable.drawImage(j1, x, (int)Math.round(y-hauteurLuke+(hauteurCase*0.5)), largeurCase, hauteurLuke, null);
