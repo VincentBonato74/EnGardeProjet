@@ -30,10 +30,7 @@ public class JoueurHumain {
         return false;
     }
 
-    public void completeMain(){
-        while(main.size() != 5){
-            System.out.println("Salut");
-            //main.add(pioche(JoueurHumain));
-        }
+    public List<Integer> getMain(){
+        return main;
     }
 }
