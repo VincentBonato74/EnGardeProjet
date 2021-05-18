@@ -24,6 +24,8 @@ public class JoueurHumain {
             System.out.println("Coup Non Jouable");
             return false;
         }*/
+
+
         return false;
     }
 

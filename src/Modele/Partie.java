@@ -31,6 +31,10 @@ public class Partie {
         return false;
     }
 
+    public void jouerCoup(Coup cp) {
+        courant.jouerCoup(cp);
+    }
+
     public int getJ1Point(){
         return J1Point;
     }

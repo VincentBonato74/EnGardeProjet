@@ -1,11 +1,13 @@
 package Modele;
 import java.util.*;
 import Controller.*;
+//import
 
 public class Manche {
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     int[] grilleJeu;
     int tourJoueur;
+    JoueurHumain joueur1,joueur2;
 
 
     public Manche(){
@@ -48,6 +50,8 @@ public class Manche {
     public void jouerCoup(Coup cp)
     {
         cp.fixerManche(this);
+        //nouveau(cp)
+
 
     }
 
