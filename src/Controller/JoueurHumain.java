@@ -24,11 +24,14 @@ public class JoueurHumain {
             System.out.println("Coup Non Jouable");
             return false;
         }*/
+
+
         return false;
     }
 
     public void completeMain(){
         while(main.size() != 5){
+            System.out.println("Salut");
             //main.add(pioche(JoueurHumain));
         }
     }

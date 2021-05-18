@@ -1,11 +1,13 @@
 package Modele;
 import java.util.*;
 import Controller.*;
+//import
 
 public class Manche {
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     int[] grilleJeu;
     int tourJoueur;
+    JoueurHumain joueur1,joueur2;
 
 
     public Manche(){
@@ -16,6 +18,8 @@ public class Manche {
         grilleJeu[0] = 1;
         //Situation du joueur 2 au début de la partie
         grilleJeu[22] = 2;
+        remplirMain(joueur1);
+        remplirMain(joueur2);
 
         tourJoueur = 1;
 
@@ -31,7 +35,15 @@ public class Manche {
         Collections.shuffle(piocheCartes);
         System.out.println("Pioche melangee :" + piocheCartes);
 
-
+    }
+    public void remplirMain(JoueurHumain j){
+        /*while(j.main.size() < 5){
+            int carte = pioche(j);
+            j.main.add(carte);
+            System.out.println("ajout de carte " + carte + "dans la main du joueur");
+        }
+        System.out.println("main complete joueur : " + j.main);
+*/
     }
 
     public int pioche(JoueurHumain j){ // le joueur récupère une carte dans la pioche
@@ -48,6 +60,8 @@ public class Manche {
     public void jouerCoup(Coup cp)
     {
         cp.fixerManche(this);
+        //nouveau(cp)
+
 
     }
 

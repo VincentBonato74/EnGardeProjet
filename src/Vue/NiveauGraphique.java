@@ -7,13 +7,15 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.InputStream;
+import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {
     Jeu jeu;
-    Image joueur1, joueur2, sol, tatooine;
-    int etape, largeur, hauteur, nbColonnes, largeurCase, hauteurCase, hauteurLuke, hauteurVador, largeurVador;
+    Image joueur1, joueur2, sol, map, teteJ1, teteJ2;
+    int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurCase, hauteurLuke, hauteurVador, largeurVador;
     Image[] joueurs1;
     Image[] joueurs2;
+    Random r;
 
     private Image chargeImage(String nom){
         Image img = null;
@@ -29,23 +31,42 @@ public class NiveauGraphique extends JComponent implements Observateur {
         return img;
     }
 
+    public void randomDecors(){
+        Random r = new Random();
+        int nb = r.nextInt(7);
+        int nb2;
+        map = chargeImage("Map"+nb);
+        if(nb == 0 || nb == 1 ){
+            nb2 = 0;
+        }else if(nb == 6 || nb == 3){
+            nb2 = 3;
+        }else if(nb == 5 || nb == 4){
+            nb2 = 1;
+        }else{
+            nb2 = 2;
+        }
+        sol = chargeImage("Sol"+nb2);
+    }
+
     public NiveauGraphique(Jeu j){
         jeu = j;
         nbColonnes = 23;
-        sol = chargeImage("Sol");
-        joueur2 = chargeImage("Vador_1_0");
-        tatooine = chargeImage("tatooine");
+        randomDecors();
+        /*map = chargeImage("Tatooine");
+        sol = chargeImage("Sol2");*/
+        teteJ1 = chargeImage("Luke_Head");
+        teteJ2 = chargeImage("Vador_Head");
 
         joueurs1 = new Image[4];
-        //joueurs2 = new Image[4];
+        joueurs2 = new Image[4];
         for(int i = 0; i < 4; i++){
-            joueurs1[i] = chargeImage("Luke_0_"+i);
-            //joueurs2[i] = chargeImage("Vador_1_"+i);
+            joueurs1[i] = chargeImage("luke_stand_0"+i);
+            joueurs2[i] = chargeImage("vador_stand_0"+i);
         }
 
         etape = 0;
         joueur1 = joueurs1[etape];
-        //joueur2 = joueurs2[etape];
+        joueur2 = joueurs2[etape];
     }
 
     public void paintComponent(Graphics g){
@@ -60,9 +81,14 @@ public class NiveauGraphique extends JComponent implements Observateur {
         hauteurLuke = (int)Math.round(largeurCase * 2.10);
         hauteurVador = (int)Math.round(largeurCase * 1.94);
         largeurVador = (int)Math.round(largeurCase * 1.50);
+        xTeteDroite = (int)Math.round(largeur*0.05);
+        xTeteGauche = (int)Math.round((largeur*.95)-(largeurCase*1.75));
+        yTete = (int)Math.round(hauteur*0.05);
+        dimensionTete = (int)Math.round(largeurCase*1.75);
 
-        drawable.drawImage(tatooine, 0, 0, largeur, hauteur, null);
-
+        drawable.drawImage(map, 0, 0, largeur, hauteur, null);
+        drawable.drawImage(teteJ1, xTeteDroite, yTete, dimensionTete ,dimensionTete,null);
+        drawable.drawImage(teteJ2, xTeteGauche, yTete, dimensionTete ,dimensionTete,null);
         for(int c = 0; c < 23; c++){
             int x = c * largeurCase;
             int y = (int) Math.round(hauteur * 0.62);
@@ -84,7 +110,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     public void animJoueur() {
         etape = (etape+1)%4;
         joueur1 = joueurs1[etape];
-        //joueur2 = joueurs2[etape];
+        joueur2 = joueurs2[etape];
         metAJour();
     }
 }
