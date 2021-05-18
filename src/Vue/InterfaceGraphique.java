@@ -27,6 +27,11 @@ public class InterfaceGraphique implements Runnable, Observateur {
         //niv.addMouseListener(new AdaptateurSouris(niv, control));
         frame.add(niv);
 
+        Timer time = new Timer(16, new AdaptateurTemps(control));
+        time.start();
+
+        control.fixerInterfaceGraphique(this);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 600);
         frame.setVisible(true);
@@ -35,5 +40,10 @@ public class InterfaceGraphique implements Runnable, Observateur {
     @Override
     public void metAJour() {
         niv.repaint();
+    }
+
+    public void animJoueur() {
+        niv.animJoueur();
+        metAJour();
     }
 }

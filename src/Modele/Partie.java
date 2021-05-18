@@ -1,30 +1,24 @@
 package Modele;
 
+import Patterns.Observable;
+
 public class Partie {
     boolean J1Gagnant, J2Gagnant;
     int J1Point, J2Point;
-    int[] grilleJeu;
-    int tourJoueur;
+    Manche courant;
 
     Partie(){
         initialisePartie();
     }
 
     public void initialisePartie(){
-        grilleJeu = new int[23];
+        courant = new Manche();
         J1Gagnant = false;
         J2Gagnant = false;
         J1Point = 0;
         J2Point = 0;
-        tourJoueur = 1;
-        //Situation du joueur 1 au début de la partie
-        grilleJeu[0] = 1;
-        //Situation du joueur 2 au début de la partie
-        grilleJeu[22] = 2;
+
     }
-
-
-
 
     public boolean aGagner(){
         if(J1Point == 5){
@@ -37,27 +31,16 @@ public class Partie {
         return false;
     }
 
+    public void jouerCoup(Coup cp) {
+        courant.jouerCoup(cp);
+    }
+
     public int getJ1Point(){
         return J1Point;
     }
 
     public int getJ2Point(){
-        return J2Point;
-    }
+        return J2Point;}
 
-    public boolean estJ1(int nb){
-        return grilleJeu[nb] == 1;
-    }
 
-    public boolean estJ2(int nb){
-        return grilleJeu[nb] == 2;
-    }
-
-    public boolean estVide(int nb){
-        return grilleJeu[nb] == 0;
-    }
-
-    public int getTourJoueur(){
-        return tourJoueur;
-    }
 }
