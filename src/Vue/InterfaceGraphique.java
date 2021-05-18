@@ -33,7 +33,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         control.fixerInterfaceGraphique(this);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1840, 1104);
+        frame.setSize(1100, 660);
         frame.setVisible(true);
     }
 
