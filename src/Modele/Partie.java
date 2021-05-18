@@ -7,7 +7,7 @@ public class Partie {
     int J1Point, J2Point;
     Manche courant;
 
-    Partie(){
+    public Partie(){
         initialisePartie();
     }
 

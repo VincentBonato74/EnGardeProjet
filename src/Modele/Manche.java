@@ -18,6 +18,8 @@ public class Manche {
         grilleJeu[0] = 1;
         //Situation du joueur 2 au début de la partie
         grilleJeu[22] = 2;
+        remplirMain(joueur1);
+        remplirMain(joueur2);
 
         tourJoueur = 1;
 
@@ -33,7 +35,15 @@ public class Manche {
         Collections.shuffle(piocheCartes);
         System.out.println("Pioche melangee :" + piocheCartes);
 
-
+    }
+    public void remplirMain(JoueurHumain j){
+        /*while(j.main.size() < 5){
+            int carte = pioche(j);
+            j.main.add(carte);
+            System.out.println("ajout de carte " + carte + "dans la main du joueur");
+        }
+        System.out.println("main complete joueur : " + j.main);
+*/
     }
 
     public int pioche(JoueurHumain j){ // le joueur récupère une carte dans la pioche
