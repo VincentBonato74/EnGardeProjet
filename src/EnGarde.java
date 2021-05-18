@@ -8,7 +8,8 @@ public class EnGarde {
         try {
             Jeu j = new Jeu();
             Manche m = new Manche();
-            ControllerMediateur c = new ControllerMediateur(j);
+            ControllerMediateur c = n
+            ControllerMediateur(j);
             InterfaceGraphique.demarrer(j, c);
         } catch (Exception e) {
             e.printStackTrace();
