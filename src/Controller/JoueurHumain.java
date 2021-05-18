@@ -31,6 +31,7 @@ public class JoueurHumain {
 
     public void completeMain(){
         while(main.size() != 5){
+            System.out.println("Salut");
             //main.add(pioche(JoueurHumain));
         }
     }
