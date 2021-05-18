@@ -3,7 +3,7 @@ package Modele;
 public class Partie {
     boolean J1Gagnant, J2Gagnant;
     int J1Point, J2Point;
-    int grilleJeu[];
+    int[] grilleJeu;
     int tourJoueur;
 
     Partie(){
@@ -20,7 +20,7 @@ public class Partie {
         //Situation du joueur 1 au début de la partie
         grilleJeu[0] = 1;
         //Situation du joueur 2 au début de la partie
-        grilleJeu[23] = 2;
+        grilleJeu[22] = 2;
     }
 
 
