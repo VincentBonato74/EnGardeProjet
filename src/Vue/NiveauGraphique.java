@@ -34,17 +34,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
     public void randomDecors(){
         Random r = new Random();
         int nb = r.nextInt(7);
-        int nb2;
+        int nb2 = nb%4;
         map = chargeImage("Map"+nb);
-        if(nb == 0 || nb == 1 ){
-            nb2 = 0;
-        }else if(nb == 6 || nb == 3){
-            nb2 = 3;
-        }else if(nb == 5 || nb == 4){
-            nb2 = 1;
-        }else{
-            nb2 = 2;
-        }
         sol = chargeImage("Sol"+nb2);
     }
 
@@ -52,8 +43,6 @@ public class NiveauGraphique extends JComponent implements Observateur {
         jeu = j;
         nbColonnes = 23;
         randomDecors();
-        /*map = chargeImage("Tatooine");
-        sol = chargeImage("Sol2");*/
         teteJ1 = chargeImage("Luke_Head");
         teteJ2 = chargeImage("Vador_Head");
 
