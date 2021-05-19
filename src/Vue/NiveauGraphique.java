@@ -147,7 +147,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
             case 5:
                 drawable.drawImage(carte5_select, x , y, l, h, null);
                 break;
-
+            default:
+                break;
         }
     }
 
@@ -185,7 +186,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
                 case 5:
                     drawable.drawImage(carte5, x, y, largeurCarte, hauteurCarte, null);
                     break;
-
+                default:
+                    break;
             }
             if(j.getCarteI().size() < 5){
                 j.initCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
