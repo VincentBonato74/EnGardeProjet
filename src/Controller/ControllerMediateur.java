@@ -43,7 +43,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 					 System.out.print("Carte: " + c.getValeur() + "\n");
 
 					 //inter.SelectionCarte(c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
-					jeu.SelectionCarte(c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
+					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
 				}
 			}
 		}

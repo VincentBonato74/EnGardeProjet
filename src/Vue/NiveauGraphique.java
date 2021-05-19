@@ -198,13 +198,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
                 j.updateCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             }
 
-            CarteIHM carte = j.carteI.get(i);
-
-            if(jeu.selectedCarte != null && j.carteI.get(i).getId() == i){
 
 
-                jeu.selectedCarte.update(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
+            if (jeu.selectedCarte != null && jeu.selectedCarte.getId() == i){
+
+                jeu.selectedCarte.update(jeu.selectedCarte.getId(), jeu.selectedCarte.getValeur(), x, y, largeurCarte, hauteurCarte);
             }
+
         }
     }
 }

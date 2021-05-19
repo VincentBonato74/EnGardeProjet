@@ -30,8 +30,8 @@ public class Jeu extends Observable {
         }
     }
 
-    public void SelectionCarte(int val ,int x, int y, int l, int h) {
-        selectedCarte = new CarteIHM(val, x, y, l, h);
+    public void SelectionCarte(int id, int val ,int x, int y, int l, int h) {
+        selectedCarte = new CarteIHM(id, val, x, y, l, h);
         miseAJour();
     }
 }
