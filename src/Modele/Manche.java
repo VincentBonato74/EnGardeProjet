@@ -34,8 +34,8 @@ public class Manche {
         remplirMain(joueur1);
         remplirMain(joueur2);
         System.out.println("Pioche complete : " + piocheCartes);
-        listerCoups(joueur1);
-        listerCoups(joueur2);
+        //listerCoups(joueur1);
+        //listerCoups(joueur2);
 
         tourJoueur = 1;
 
@@ -68,7 +68,7 @@ public class Manche {
         return res;
     }
 
-    public void listerCoups(JoueurHumain j){
+    /*public void listerCoups(JoueurHumain j){
         int newPos;
         int dir = j.direction;
         System.out.println("main complete joueur : " + j.main);
@@ -84,7 +84,7 @@ public class Manche {
                 System.out.println("peut avancer en " + newPos);
             }
         }
-    }
+    }*/
 
     public void jouerCoup(Coup cp)
     {

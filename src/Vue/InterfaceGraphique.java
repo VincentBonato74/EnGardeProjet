@@ -24,7 +24,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
     public void run() {
         JFrame frame = new JFrame("En Garde");
         niv = new NiveauGraphique(jeu);
-        //niv.addMouseListener(new AdaptateurSouris(niv, control));
+        niv.addMouseListener(new AdaptateurSouris(niv, control));
         frame.add(niv);
 
         Timer time = new Timer(16, new AdaptateurTemps(control));
@@ -46,4 +46,9 @@ public class InterfaceGraphique implements Runnable, Observateur {
         niv.animJoueur();
         metAJour();
     }
+
+    /*public void SelectionCarte(int val ,int x, int y, int l, int h){
+        niv.selectCarte(val ,x, y, l, h);
+        metAJour();
+    }*/
 }

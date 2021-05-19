@@ -1,6 +1,7 @@
 package Vue;
 
 import Controller.JoueurHumain;
+import Modele.CarteIHM;
 import Modele.Jeu;
 import Patterns.Observateur;
 
@@ -18,6 +19,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     Image[] joueurs1;
     Image[] joueurs2;
     Image carte1, carte2, carte3, carte4, carte5;
+    Image carte1_select, carte2_select, carte3_select, carte4_select, carte5_select;
     Random r;
 
     private Image chargeImage(String nom){
@@ -49,11 +51,17 @@ public class NiveauGraphique extends JComponent implements Observateur {
         teteJ1 = chargeImage("Luke_Head");
         teteJ2 = chargeImage("Vador_Head");
 
-        carte1 = chargeImage("Card_1_selected");
+        carte1 = chargeImage("Card_1");
         carte2 = chargeImage("Card_2");
         carte3 = chargeImage("Card_3");
         carte4 = chargeImage("Card_4");
         carte5 = chargeImage("Card_5");
+
+        carte1_select = chargeImage("Card_1_selected");
+        carte2_select = chargeImage("Card_2_selected");
+        carte3_select = chargeImage("Card_3_selected");
+        carte4_select = chargeImage("Card_4_selected");
+        carte5_select = chargeImage("Card_5_selected");
 
 
         joueurs1 = new Image[4];
@@ -120,16 +128,33 @@ public class NiveauGraphique extends JComponent implements Observateur {
         metAJour();
     }
 
+    public void selectCarte(int val ,int x, int y, int l, int h, Graphics2D drawable){
+
+
+        switch(val) {
+            case 1:
+                drawable.drawImage(carte1_select, x , y, l, h, null);
+                break;
+            case 2:
+                drawable.drawImage(carte2_select, x , y, l, h, null);
+                break;
+            case 3:
+                drawable.drawImage(carte3_select, x , y, l, h, null);
+                break;
+            case 4:
+                drawable.drawImage(carte4_select, x , y, l, h, null);
+                break;
+            case 5:
+                drawable.drawImage(carte5_select, x , y, l, h, null);
+                break;
+
+        }
+    }
+
     public void afficheMainJoueur(JoueurHumain j, Graphics2D drawable){
-        /*List mainJoueur = new ArrayList();
-        mainJoueur = j.getMain();
-        int largeurCarte =
-        */
 
-
-
-        int largeurCarte = (int) Math.round(largeur * 0.37)/5;
-        int hauteurCarte = (int) Math.round(hauteur * 0.20);
+        int largeurCarte = (int) Math.round(largeur * 0.30)/5;
+        int hauteurCarte = (int) Math.round(hauteur * 0.15);
 
         int nbCartes = j.main.size();
 
@@ -140,6 +165,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         for(int i = 0; i < j.main.size(); i++){
 
             int valeurCarte = j.main.get(i);
+
 
             x = x+largeurCarte;
 
@@ -161,8 +187,19 @@ public class NiveauGraphique extends JComponent implements Observateur {
                     break;
 
             }
+            if(j.getCarteI().size() < 5){
+                j.initCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
+            } else {
+                j.updateCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
+            }
+
+            CarteIHM carte = j.carteI.get(i);
+
+            if(jeu.selectedCarte != null && j.carteI.get(i).getId() == i){
+
+
+                jeu.selectedCarte.update(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
+            }
         }
-
-
     }
 }
