@@ -10,10 +10,10 @@ public class Manche {
     int tourJoueur;
     JoueurHumain joueur1, joueur2;
 
-
     public Manche(Partie p){
 
         partie = p;
+        //int sel = p.jeu.selectedCarte;
 
         //Les joueurs de la partie associés à la manche
         joueur1 = partie.Joueur(1);
