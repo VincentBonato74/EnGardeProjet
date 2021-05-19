@@ -112,6 +112,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
             afficheMainJoueur(jeu.partie().manche().Joueur(1), drawable);
         }
 
+        if(jeu.selectedCarte != null)      {
+            selectCarte(jeu.selectedCarte.getValeur(), jeu.selectedCarte.getCoordX(), jeu.selectedCarte.getCoordY(), jeu.selectedCarte.getLargeur(), jeu.selectedCarte.getHauteur(), drawable);
+        }
 
 
     }

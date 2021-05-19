@@ -4,6 +4,7 @@ import Patterns.Observable;
 
 public class Jeu extends Observable {
     Partie courant;
+    public CarteIHM selectedCarte;
 
     public Jeu()
     {
@@ -27,5 +28,10 @@ public class Jeu extends Observable {
             courant.jouerCoup(cp);
             miseAJour();
         }
+    }
+
+    public void SelectionCarte(int val ,int x, int y, int l, int h) {
+        selectedCarte = new CarteIHM(val, x, y, l, h);
+        miseAJour();
     }
 }
