@@ -4,22 +4,38 @@ import Controller.*;
 //import
 
 public class Manche {
+    Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     int[] grilleJeu;
     int tourJoueur;
-    JoueurHumain joueur1,joueur2;
+    JoueurHumain joueur1, joueur2;
 
 
-    public Manche(){
+    public Manche(Partie p){
 
+        partie = p;
+
+        //Les joueurs de la partie associés à la manche
+        joueur1 = partie.Joueur(1);
+        joueur2 = partie.Joueur(2);
+
+        //Initialiser la pioche de la manche
         initialiserPioche();
+
         grilleJeu = new int [23];
         //Situation du joueur 1 au début de la partie
         grilleJeu[0] = 1;
+        joueur1.position = 0;
+        joueur1.direction = 1;
         //Situation du joueur 2 au début de la partie
         grilleJeu[22] = 2;
+        joueur2.position = 22;
+        joueur2.direction = -1;
         remplirMain(joueur1);
         remplirMain(joueur2);
+        System.out.println("Pioche complete : " + piocheCartes);
+        listerCoups(joueur1);
+        listerCoups(joueur2);
 
         tourJoueur = 1;
 
@@ -37,24 +53,37 @@ public class Manche {
 
     }
     public void remplirMain(JoueurHumain j){
-        /*while(j.main.size() < 5){
-            int carte = pioche(j);
+        while(j.main.size() < 5){
+            int carte = pioche();
             j.main.add(carte);
-            System.out.println("ajout de carte " + carte + "dans la main du joueur");
+
         }
         System.out.println("main complete joueur : " + j.main);
-*/
     }
 
-    public int pioche(JoueurHumain j){ // le joueur récupère une carte dans la pioche
-        int taille = j.main.size();
-        int res = 0;
-        if(taille <5){
-            res = piocheCartes.get(0);
-            piocheCartes.remove(0);
-
-        }
+    public int pioche(){ // le joueur récupère une carte dans l
+        int res;
+        res = piocheCartes.get(0);
+        piocheCartes.remove(0);
         return res;
+    }
+
+    public void listerCoups(JoueurHumain j){
+        int newPos;
+        int dir = j.direction;
+        System.out.println("main complete joueur : " + j.main);
+        for(int i=0;i<j.main.size();i++){
+            int valeurCarte = j.main.get(i);
+            System.out.println("carte : " + valeurCarte);
+            if(j.position >= valeurCarte){
+                newPos = j.position - (dir * valeurCarte);
+                System.out.println("peut reculer en " + newPos);
+            }
+            if(j.position + valeurCarte < 22 && grilleJeu[j.position+valeurCarte] == 0){
+                newPos = j.position + (dir * valeurCarte);
+                System.out.println("peut avancer en " + newPos);
+            }
+        }
     }
 
     public void jouerCoup(Coup cp)
@@ -63,6 +92,11 @@ public class Manche {
         //nouveau(cp)
 
 
+    }
+
+    public Coup joue()
+    {
+        return null;
     }
 
     public int getTourJoueur(){ return tourJoueur;}
@@ -77,6 +111,18 @@ public class Manche {
 
     public boolean estVide(int nb){
         return grilleJeu[nb] == 0;
+    }
+
+    public JoueurHumain Joueur(int numJoueur)
+    {
+        if(numJoueur == 1)
+        {
+            return joueur1;
+        }
+        else
+        {
+            return joueur2;
+        }
     }
 
 }

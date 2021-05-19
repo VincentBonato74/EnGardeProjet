@@ -42,7 +42,7 @@ public class Historique<E extends Commande> {
     Coup annuler(){
         if(peutAnnuler()){
             Coup c = CoupFait.extraitTete();
-            c.desexecute();
+            c.desexecute(c);
 
             CoupAnnuler.insereTete(c);
             return c;

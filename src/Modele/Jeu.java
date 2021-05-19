@@ -11,7 +11,7 @@ public class Jeu extends Observable {
     }
 
     public void initialisePartie(){
-        courant = new Partie();
+        courant = new Partie(this);
         miseAJour();
     }
 

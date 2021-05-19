@@ -1,5 +1,6 @@
 package Vue;
 
+import Controller.JoueurHumain;
 import Modele.Jeu;
 import Patterns.Observateur;
 
@@ -7,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {
@@ -15,6 +17,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurCase, hauteurLuke, hauteurVador, largeurVador;
     Image[] joueurs1;
     Image[] joueurs2;
+    Image carte1, carte2, carte3, carte4, carte5;
     Random r;
 
     private Image chargeImage(String nom){
@@ -45,6 +48,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
         randomDecors();
         teteJ1 = chargeImage("Luke_Head");
         teteJ2 = chargeImage("Vador_Head");
+
+        carte1 = chargeImage("Card_1_selected");
+        carte2 = chargeImage("Card_2");
+        carte3 = chargeImage("Card_3");
+        carte4 = chargeImage("Card_4");
+        carte5 = chargeImage("Card_5");
+
 
         joueurs1 = new Image[4];
         joueurs2 = new Image[4];
@@ -89,6 +99,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
             }
         }
 
+        if(jeu.partie().manche().getTourJoueur() == 1)
+        {
+            afficheMainJoueur(jeu.partie().manche().Joueur(1), drawable);
+        }
+
+
+
     }
 
     @Override
@@ -101,5 +118,51 @@ public class NiveauGraphique extends JComponent implements Observateur {
         joueur1 = joueurs1[etape];
         joueur2 = joueurs2[etape];
         metAJour();
+    }
+
+    public void afficheMainJoueur(JoueurHumain j, Graphics2D drawable){
+        /*List mainJoueur = new ArrayList();
+        mainJoueur = j.getMain();
+        int largeurCarte =
+        */
+
+
+
+        int largeurCarte = (int) Math.round(largeur * 0.37)/5;
+        int hauteurCarte = (int) Math.round(hauteur * 0.20);
+
+        int nbCartes = j.main.size();
+
+        int x = (largeur/2)-((nbCartes*largeurCarte)/2)-largeurCarte;
+        int y = (int) Math.round(hauteur * 0.75);
+
+
+        for(int i = 0; i < j.main.size(); i++){
+
+            int valeurCarte = j.main.get(i);
+
+            x = x+largeurCarte;
+
+            switch(valeurCarte) {
+                case 1:
+                    drawable.drawImage(carte1, x , y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 2:
+                    drawable.drawImage(carte2, x , y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 3:
+                    drawable.drawImage(carte3, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 4:
+                    drawable.drawImage(carte4, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 5:
+                    drawable.drawImage(carte5, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+
+            }
+        }
+
+
     }
 }
