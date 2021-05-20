@@ -12,9 +12,9 @@ public class Coup extends Commande {
     action.put("attaque", 5);
     action.put("attaque",5);*/
 
-    public Coup(int []grilleJeu)
-    {
+    public Coup(int []grilleJeu, Action action){
         mapAvant = grilleJeu;
+        this.action = action;
     }
 
     public Action GetAction(){
@@ -26,13 +26,11 @@ public class Coup extends Commande {
         manche = m;
     }
 
-    public void execute(Coup cp)
-    {
+    public void execute(Coup cp) {
 
     }
 
-    public void desexecute(Coup cp)
-    {
+    public void desexecute(Coup cp) {
 
     }
 

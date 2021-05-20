@@ -46,6 +46,7 @@ public class Manche {
         tourJoueur = 1;
 
     }
+
     public void clickCarte(){
         //listerCoups(joueur1, p.jeu.selectedCarte);
 
@@ -62,6 +63,7 @@ public class Manche {
         System.out.println("Pioche melangee :" + piocheCartes);
 
     }
+
     public void remplirMain(JoueurHumain j){
         while(j.main.size() < 5){
             int carte = pioche();
@@ -214,8 +216,7 @@ public class Manche {
         return grilleJeu[nb] == 0;
     }
 
-    public JoueurHumain Joueur(int numJoueur)
-    {
+    public JoueurHumain Joueur(int numJoueur) {
         if(numJoueur == 1)
         {
             return joueur1;
