@@ -14,6 +14,7 @@ public class Manche {
     public Manche(Partie p){
 
         partie = p;
+        //int sel = p.jeu.selectedCarte;
 
         //Les joueurs de la partie associés à la manche
         joueur1 = partie.Joueur(1);
@@ -34,8 +35,6 @@ public class Manche {
         remplirMain(joueur1);
         remplirMain(joueur2);
         System.out.println("Pioche complete : " + piocheCartes);
-        joueur1.position = 10;
-        joueur2.position = 14;
         listerCoups(joueur1);
         listerCoups(joueur2);
 

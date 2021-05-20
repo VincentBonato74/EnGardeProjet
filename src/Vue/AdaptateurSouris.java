@@ -14,8 +14,10 @@ public class AdaptateurSouris extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        int l = e.getY();
-        int c = e.getX();
-        //control.clicSouris(l, c);
+
+        control.clickCarte(e.getX(), e.getY());
     }
+
+
+
 }
