@@ -73,7 +73,7 @@ public class JoueurHumain extends Joueur {
 
     @Override
         // Renvoie l'indice où le joueur serait s'il se déplaçait vers l'arriere
-    int targetArriere(int val) {
+    public int targetArriere(int val) {
         return this.position+(this.direction*(-val));
     }
 }

@@ -7,11 +7,6 @@ public class Coup extends Commande {
     int[] mapAvant;
     Action action;
 
-    //HashMap <String, Integer> action = new HashMap <String, Integer>();
-    /*action.put("avance",3);
-    action.put("attaque", 5);
-    action.put("attaque",5);*/
-
     public Coup(int []grilleJeu, Action action){
         mapAvant = grilleJeu;
         this.action = action;

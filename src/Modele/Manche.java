@@ -96,6 +96,8 @@ public class Manche extends Historique<Coup>{
                     System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
                 }else if(newPos < joueur2.position){
                     System.out.println("peut avancer en " + newPos);
+                    //Coup coup = new Coup()
+                    //joue(1,valeurCarte);
                 }else{
                     System.out.println("bloqué par joueur");
                 }
