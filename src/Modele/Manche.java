@@ -75,7 +75,7 @@ public class Manche {
         int newPos;
         int dir = j.direction;
         int valeurCarte = carte.getValeur();
-        System.out.println("carte : " + valeurCarte);
+        //System.out.println("carte : " + valeurCarte);
         if(dir == 1) { // joueur à gauche
             if(j.position >= valeurCarte){
                 newPos = j.position - valeurCarte;
