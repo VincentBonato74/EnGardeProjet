@@ -3,7 +3,9 @@ package Vue;
 import Modele.Jeu;
 import Patterns.Observateur;
 
+
 import javax.swing.*;
+import java.awt.*;
 
 public class InterfaceGraphique implements Runnable, Observateur {
     Jeu jeu;

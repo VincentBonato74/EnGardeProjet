@@ -17,7 +17,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 	int decompte;
 	Sequence<Animation> animations;
 	InterfaceGraphique inter;
-	NiveauGraphique niv;
+
 
 	public ControllerMediateur(Jeu j){
 		jeu = j;
@@ -36,8 +36,8 @@ public class ControllerMediateur implements CollecteurEvenements {
 	public void clickCarte(int x, int y){
 		//System.out.print("joueur: " + jeu.partie().Joueur(joueurCourant).carteI + "\n");
 		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
-		for(int i = 0; i < jeu.partie().Joueur(joueurCourant).getCarteI().size(); i++){
-			CarteIHM c = jeu.partie().Joueur(joueurCourant).getCarteI().get(i);
+		for(int i = 0; i < jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().size(); i++){
+			CarteIHM c = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().get(i);
 			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
@@ -94,6 +94,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 			default:
 				return false;
 		}
+
 		return true;
     }
 }

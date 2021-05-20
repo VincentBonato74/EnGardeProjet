@@ -18,7 +18,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurCase, hauteurLuke, hauteurVador, largeurVador;
     Image[] joueurs1;
     Image[] joueurs2;
-    Image carte1, carte2, carte3, carte4, carte5;
+    Image carte1, carte2, carte3, carte4, carte5, carte0;
     Image carte1_select, carte2_select, carte3_select, carte4_select, carte5_select;
     Random r;
 
@@ -51,6 +51,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         teteJ1 = chargeImage("Luke_Head");
         teteJ2 = chargeImage("Vador_Head");
 
+        carte0 = chargeImage("Card_0");
+
         carte1 = chargeImage("Card_1");
         carte2 = chargeImage("Card_2");
         carte3 = chargeImage("Card_3");
@@ -81,6 +83,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         largeur = getSize().width;
         hauteur = getSize().height;
 
+
         drawable.clearRect(0, 0, largeur, hauteur);
 
         largeurCase = largeur / nbColonnes;
@@ -109,12 +112,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
             }
         }
 
-        if(jeu.partie().manche().getTourJoueur() == 1)
-        {
-            afficheMainJoueur(jeu.partie().manche().Joueur(1), drawable);
-        }
+        afficheMainJoueur(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), drawable);
 
-        if(jeu.selectedCarte != null)      {
+        if(jeu.selectedCarte != null && jeu.selectedCarte.getId() != -1)      {
             selectCarte(jeu.selectedCarte.getValeur(), jeu.selectedCarte.getCoordX(), jeu.selectedCarte.getCoordY(), jeu.selectedCarte.getLargeur(), jeu.selectedCarte.getHauteur(), drawable);
         }
 
@@ -158,11 +158,12 @@ public class NiveauGraphique extends JComponent implements Observateur {
     }
 
     public void afficheMainJoueur(JoueurHumain j, Graphics2D drawable){
+        int nbCartes = j.main.size();
+        //System.out.print("joueur: "+ j.main + "\n");
 
         int largeurCarte = (int) Math.round(largeur * 0.30)/5;
         int hauteurCarte = (int) Math.round(hauteur * 0.15);
 
-        int nbCartes = j.main.size();
 
         int x = (largeur/2)-((nbCartes*largeurCarte)/2)-largeurCarte;
         int y = (int) Math.round(hauteur * 0.75);
@@ -190,6 +191,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
                     break;
                 case 5:
                     drawable.drawImage(carte5, x, y, largeurCarte, hauteurCarte, null);
+                    break;
+                case 0:
+                    drawable.drawImage(carte0, x, y, largeurCarte, hauteurCarte, null);
                     break;
                 default:
                     break;

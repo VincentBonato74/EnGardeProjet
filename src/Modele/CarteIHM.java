@@ -40,6 +40,15 @@ public class CarteIHM {
         hauteur = h;
     }
 
+    public void reset(){
+        id = -1;
+        valeur = 0;
+        x = 0;
+        y = 0;
+        largeur = 0;
+        hauteur = 0;
+    }
+
     public int getCoordX(){
         return x;
     }
