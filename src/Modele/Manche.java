@@ -3,7 +3,7 @@ import java.util.*;
 import Controller.*;
 //import
 
-public class Manche {
+public class Manche extends Historique<Coup>{
 
     static final int AVANCER = 1;
     static final int RECULER = 2;
@@ -14,8 +14,8 @@ public class Manche {
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     public int[] grilleJeu;
-    int tourJoueur;
-    JoueurHumain joueur1, joueur2, joueurCourant;
+    public int tourJoueur;
+    JoueurHumain joueur1, joueur2;
 
 
     public Manche(Partie p){
@@ -224,6 +224,19 @@ public class Manche {
         else
         {
             return joueur2;
+        }
+    }
+
+    public void changeTourJoueur(int tour)
+    {
+        if(tour == 1)
+        {
+                this.tourJoueur = 2;
+        }
+        else
+        {
+                this.tourJoueur = 1;
+
         }
     }
 

@@ -11,6 +11,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
     Jeu jeu;
     CollecteurEvenements control;
     NiveauGraphique niv;
+    JButton avancer, reculer;
 
     InterfaceGraphique(Jeu j,CollecteurEvenements c){
         jeu = j;
@@ -22,12 +23,51 @@ public class InterfaceGraphique implements Runnable, Observateur {
         SwingUtilities.invokeLater(new InterfaceGraphique(j,control));
     }
 
+    private JLabel createLabel(String s) {
+        JLabel lab = new JLabel(s);
+        lab.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return lab;
+    }
+
+    private JToggleButton createToggleButton(String s, String c) {
+        JToggleButton but = new JToggleButton(s);
+        but.addActionListener(new AdaptateurCommande(control, c));
+        but.setAlignmentX(Component.CENTER_ALIGNMENT);
+        but.setFocusable(false);
+        return but;
+    }
+
+    private JButton createButton(String s, String c) {
+        JButton but = new JButton(s);
+        but.addActionListener(new AdaptateurCommande(control, c));
+        but.setAlignmentX(Component.CENTER_ALIGNMENT);
+        but.setFocusable(false);
+        return but;
+    }
+
+
     @Override
     public void run() {
         JFrame frame = new JFrame("En Garde");
         niv = new NiveauGraphique(jeu);
         niv.addMouseListener(new AdaptateurSouris(niv, control));
         frame.add(niv);
+
+        // Décompte des pas et poussées
+        Box barreLaterale = Box.createVerticalBox();
+        barreLaterale.add(createLabel("En Garde"));
+        barreLaterale.add(Box.createGlue());
+
+        avancer = createButton("Avancer", "avancer");
+        barreLaterale.add(avancer);
+
+        reculer = createButton("Reculer","reculer");
+        barreLaterale.add(reculer);
+
+        frame.add(barreLaterale, BorderLayout.LINE_END);
+
+
+
 
         Timer time = new Timer(16, new AdaptateurTemps(control));
         time.start();
