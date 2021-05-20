@@ -93,6 +93,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         yTete = (int)Math.round(hauteur*0.05);
         dimensionTete = (int)Math.round(largeurCase*1.75);
 
+        int[] grilleJeu = jeu.partie().manche().grilleJeu;
+
         drawable.drawImage(map, 0, 0, largeur, hauteur, null);
         drawable.drawImage(teteJ1, xTeteDroite, yTete, dimensionTete ,dimensionTete,null);
         drawable.drawImage(teteJ2, xTeteGauche, yTete, dimensionTete ,dimensionTete,null);
@@ -100,9 +102,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
             int x = c * largeurCase;
             int y = (int) Math.round(hauteur * 0.62);
             drawable.drawImage(sol, x, y, largeurCase, hauteurCase, null);
-            if(c == 0){
+            if(grilleJeu[c] == 1){
                 drawable.drawImage(joueur1, x, (int)Math.round(y-hauteurLuke+(hauteurCase*0.5)), largeurCase, hauteurLuke, null);
-            }else if(c == 22){
+            }else if(grilleJeu[c] == 2){
                 drawable.drawImage(joueur2, x, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), largeurVador, hauteurVador, null);
             }
         }
