@@ -2,17 +2,10 @@ package Vue;
 
 import Modele.Jeu;
 import Patterns.Observateur;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
 
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class InterfaceGraphique implements Runnable, Observateur {
     Jeu jeu;
@@ -34,6 +27,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         SwingUtilities.invokeLater(new InterfaceGraphique(j,control));
     }
 
+    //Fonction permettant de récupérer le niveau Graphique associé à l'interface Graphique dans les autres classes.
     public NiveauGraphique niv(){
         return niv;
     }
@@ -112,6 +106,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         }
     }
 
+    //Fonction Permettant de rendre responsive le panel du menu
     public void MAJPanelMenu(){
         if(largeurPanel != ((pan.getWidth() + getLargeur()) / 2)){
             System.out.println("Redimmensionnement");
@@ -138,34 +133,29 @@ public class InterfaceGraphique implements Runnable, Observateur {
         }
     }
 
-    public void InterfaceOption(){
-        System.out.println("Salut 1 ");
+    //Fonction permettant d'ajouter et de supprimer les panel de la page règles
+    public void InterfaceRegles(){
         if(niv.Option){
             niv().compteur = 0;
-            System.out.println("Salut 2 ");
             frame.add(optionGauche, BorderLayout.WEST);
             frame.add(optionDroit, BorderLayout.EAST);
             frame.revalidate();
         }else{
-            System.out.println("Salut 3 ");
             frame.remove(optionGauche);
             frame.remove(optionDroit);
             frame.revalidate();
         }
     }
 
+    //Fonction permettant de mettre a jour les booléens permettant de changer l'affichage de la fenêtre
+    //en appelant la fonction changeBackground de NiveauGraphique
     public void changeBackground(boolean b1, boolean b2, boolean b3){
         niv.changeBackground(b1, b2, b3);
         BoutonMenu();
-        InterfaceOption();
+        InterfaceRegles();
     }
 
-    private JLabel createLabel(String s) {
-        JLabel lab = new JLabel(s);
-        lab.setAlignmentX(Component.CENTER_ALIGNMENT);
-        return lab;
-    }
-
+    //Fonction permettant de faire des boutons avec un hover
     private JButton createButton(String s, String c, int i) {
         JButton but = new JButton(s);
         but.addMouseListener(new java.awt.event.MouseAdapter(){
@@ -197,28 +187,29 @@ public class InterfaceGraphique implements Runnable, Observateur {
         niv.repaint();
     }
 
+    //Fonction permettant de faire les animations en appelant la fonction animJoueur de NiveauGraphique
     public void animJoueur() {
         niv.animJoueur();
         metAJour();
     }
 
+    //permet de récupérer le booléen pour savoir si on est dans le Menu.
     public boolean getMenu(){
         return niv.Menu;
     }
 
+    //permet de récupérer le booléen pour savoir si on est dans la partie.
     public boolean getPartie(){
         return niv.Partie;
     }
 
+    //Fonction permettant de récupérer la hauteur de la fenêtre depuis NiveauGraphique
     public int getHauteur(){
         return niv.hauteur;
     }
 
+    //Fonction permettant de récupérer la largeur de la fenêtre depuis NiveauGraphique
     public int getLargeur(){
         return niv.largeur;
-    }
-
-    public void tracerRegles() {
-        niv.tracerRegles();
     }
 }

@@ -33,6 +33,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     boolean Menu, Partie, Option, PartieSet, MenuSet, OptionSet;
     public int compteur;
 
+    //Fonction Permettant de charger une image
     private Image chargeImage(String nom){
         Image img = null;
         try{
@@ -47,6 +48,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         return img;
     }
 
+    //Fonction qui choisi un décors au hasard et choisi le sol et la musique associée.
     public void randomDecors(){
         Random r = new Random();
         int nb = r.nextInt(8);
@@ -67,9 +69,12 @@ public class NiveauGraphique extends JComponent implements Observateur {
         }
     }
 
+
     public NiveauGraphique(Jeu j){
         jeu = j;
         nbColonnes = 23;
+
+        //Chargement des images
         teteJ1 = chargeImage("Luke_Head");
         teteJ2 = chargeImage("Vador_Head");
         TiretBleu = chargeImage("TiretBleu");
@@ -79,6 +84,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         NomJ1 = chargeImage("NomJ1");
         NomJ2 = chargeImage("NomJ2");
 
+        //Chargement des images pour Animations
         joueurs1 = new Image[4];
         joueurs2 = new Image[4];
         for(int i = 0; i < 4; i++){
@@ -90,8 +96,12 @@ public class NiveauGraphique extends JComponent implements Observateur {
         joueur1 = joueurs1[etape];
         joueur2 = joueurs2[etape];
 
+        //initialisation des booléens pour savoir dans quel page on est.
         Menu = true;
         Partie = false;
+        Option = false;
+
+        //initialisation de booléen pour savoir quand est ce qu'il faut démarrez ou arrêter la musique
         PartieSet = false;
         MenuSet = false;
     }
@@ -111,6 +121,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         }
     }
 
+    //Fonction qui démarre la musique du menu principal
     public void startMusique(){
         try {
             AudioInputStream input = AudioSystem.getAudioInputStream(new File("res/Music/Menu.wav"));
@@ -124,12 +135,14 @@ public class NiveauGraphique extends JComponent implements Observateur {
         }
     }
 
+    //Fonction qui permet de stopper la musique en cours
     public void stopMusique(){
         if(MenuSet || PartieSet){
             clip.stop();
         }
     }
 
+    //Fonction qui trace les différents éléments graphique du menu
     public void tracerMenu(){
         if(!MenuSet){
             stopMusique();
@@ -148,6 +161,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         drawable.drawImage(fondMenu, 0,0,largeur, hauteur, null);
     }
 
+    //Fonction qui trace les différents éléments graphique des règles du jeu
     public void tracerRegles(){
         largeurNom = (int)Math.round(largeur*0.30);
         hauteurNom = (int)Math.round(hauteur*0.25);
@@ -158,10 +172,11 @@ public class NiveauGraphique extends JComponent implements Observateur {
         drawable.drawImage(fond, 0,0,largeur, hauteur, null);
 
         if(compteur == 0){
-            drawable.drawImage(teteJ1, 150, 150, 150,150, null);
+            drawable.drawImage(teteJ1, 0, 0, 150,150, null);
         }
     }
 
+    //Fonction qui trace les différents éléments graphique de la partie.
     public void tracerPartie(){
         if(!PartieSet){
             stopMusique();
@@ -229,6 +244,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         repaint();
     }
 
+    //Fontion permettant d'animer les joueurs à l'arret.
     public void animJoueur() {
         etape = (etape+1)%4;
         joueur1 = joueurs1[etape];
@@ -236,6 +252,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         metAJour();
     }
 
+    //Fonction qui met à jour les booléens pour changer l'affichage de la fenêtre en fonction de la page
+    //que l'on veut afficher
     public void changeBackground(boolean b1, boolean b2, boolean b3) {
         /*if(MenuSet && !PartieSet){
             Menu = false;
