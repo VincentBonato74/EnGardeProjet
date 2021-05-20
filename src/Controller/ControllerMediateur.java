@@ -24,7 +24,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 		animations = new SequenceListe<>();
 		Joueur1 = j.partie().Joueur(1);
 		Joueur2 = j.partie().Joueur(2);
-		joueurCourant = 0; //jeu.partie().getTourJoueur();
+		joueurCourant = 1; //jeu.partie().getTourJoueur();
 	}
 
 	public void fixerInterfaceGraphique(InterfaceGraphique i){
@@ -34,16 +34,18 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 
 	public void clickCarte(int x, int y){
-
-		for(int i = 0; i < Joueur1.getCarteI().size(); i++){
-			CarteIHM c = Joueur1.getCarteI().get(i);
+		//System.out.print("joueur: " + jeu.partie().Joueur(joueurCourant).carteI + "\n");
+		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
+		for(int i = 0; i < jeu.partie().Joueur(joueurCourant).getCarteI().size(); i++){
+			CarteIHM c = jeu.partie().Joueur(joueurCourant).getCarteI().get(i);
 			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
-					 System.out.print("Carte: " + c.getValeur() + "\n");
+					System.out.print("Carte: " + c.getValeur() + "\n");
 
-					 //inter.SelectionCarte(c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
+
+					 jeu.partie().manche().listerCoups(jeu.partie().Joueur(joueurCourant), jeu.selectedCarte);
 				}
 			}
 		}
