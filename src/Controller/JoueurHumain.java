@@ -5,7 +5,7 @@ import Modele.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JoueurHumain {
+public class JoueurHumain extends Joueur {
     Jeu jeu;
     public ArrayList<Integer> main= new ArrayList<>();
     public int position;
@@ -26,8 +26,6 @@ public class JoueurHumain {
             System.out.println("Coup Non Jouable");
             return false;
         }*/
-
-
         return false;
     }
 
@@ -46,8 +44,42 @@ public class JoueurHumain {
         return carteI;
     }
 
-
     public List<Integer> getMain(){
         return main;
+    }
+
+    public int getPosition(){
+        return this.position;
+    }
+
+    public int getDirection(){
+        return this.direction;
+    }
+
+    @Override
+    public void deplace(int val) {
+        // direction is 1 or -1. We will know which way the character is going to take.
+        // For the left one, going forward = going right
+        // For the right one, going forward = going left
+        // This is why we multiply val by the direction
+
+        /* Version calcul
+         * this.position = this.position+(this.direction*val);
+         */
+
+        /* Version remplacement d'indice */
+        this.position = val;
+    }
+
+    @Override
+    // Renvoie l'indice où le joueur serait s'il se déplaçait vers l'avant
+    public int targetAvant(int val) {
+        return this.position+(this.direction*val);
+    }
+
+    @Override
+        // Renvoie l'indice où le joueur serait s'il se déplaçait vers l'arriere
+    int targetArriere(int val) {
+        return this.position+(this.direction*(-val));
     }
 }

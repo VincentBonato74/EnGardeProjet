@@ -4,11 +4,18 @@ import Controller.*;
 //import
 
 public class Manche {
+
+    static final int AVANCER = 1;
+    static final int RECULER = 2;
+    static final int ATTAQUER = 3;
+    static final int ATTAQUE_INDIRECTE = 4;
+    static final int BLOQUER = 5;
+
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     public int[] grilleJeu;
     int tourJoueur;
-    JoueurHumain joueur1, joueur2;
+    JoueurHumain joueur1, joueur2, joueurCourant;
 
 
     public Manche(Partie p){
@@ -116,7 +123,68 @@ public class Manche {
         cp.fixerManche(this);
         //nouveau(cp)
 
+        //============================================ Recupérer le joueur courant
+        this.joueurCourant = Joueur(tourJoueur);
 
+        //============================================ Recupérer l'action (avancer, reculer, attaquer, etc.)
+        Action action = cp.GetAction();
+
+        //============================================ CAS Action = Avancer (AVANCER: constante int)
+        if(action.id == AVANCER){
+            /* TDO: déplacement = 1 carte
+             * Faut qu'on se mette au point si action.valeurs c'est l'indice cartes selectionnées dans la main
+             * OU on y insère seuelement les cartes choisies
+             * En gros attaque: [][][3][3][]
+             * ou [3][3][][][]
+             * On additionne la valeur de toutes les cartes selectionnées.
+             * Même si on en a pas selectionné 5, c'est pas grave.
+             */
+            int nbDeplacement = 0;
+            for(int i=0; i<5; i++){
+                nbDeplacement += action.valeurs[i];
+            }
+            // Récupération de l'indice où le joueur se déplacerait
+            int target = this.joueurCourant.targetAvant(nbDeplacement);
+
+            // Vérification de disponibilité
+            if (target < this.grilleJeu.length && estVide(this.grilleJeu[target])){
+
+                // On met à jour le joueur courant
+                this.joueurCourant.deplace(target);
+
+                int oldPosJ1 = this.joueur1.getPosition();
+                int oldPosJ2 = this.joueur2.getPosition();
+
+                if((tourJoueur%2)+1 == 1){
+                    this.joueur1 = joueurCourant;
+                } else {
+                    this.joueur2 = joueurCourant;
+                }
+                // On met à jour les infos générales du jeu.
+                miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
+            } else {
+                System.out.println("Déplacement impossible, personnage sur la case destination ou destination hors map");
+            }
+            // Enregistrer coup
+        }
+        else if(action.id == RECULER) {
+            System.out.println("action reculer (TODO)");
+            // TDO
+        }
+    }
+
+    public void miseAJourGrille(int oldPosJ1, int oldPosJ2, int posJ1, int posJ2){
+        // Les conditions sont codées de manière à ce que si un joueur bouge, l'autre ne bouge pas
+        // Si les deux conditions ne sont pas respectées, cela veut dire qu'aucun joueur n'a bougé
+        if(posJ1 != oldPosJ1){
+            this.grilleJeu[oldPosJ1] = 0;
+            this.grilleJeu[posJ1] = 1;
+        } else if (posJ2 != oldPosJ2) {
+            this.grilleJeu[oldPosJ2] = 0;
+            this.grilleJeu[posJ2] = 2;
+        } else {
+            System.out.println("Aucun joueur n'a bougé");
+        }
     }
 
     public Coup joue()
