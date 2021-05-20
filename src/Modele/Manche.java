@@ -6,7 +6,7 @@ import Controller.*;
 public class Manche {
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
-    int[] grilleJeu;
+    public int[] grilleJeu;
     int tourJoueur;
     JoueurHumain joueur1, joueur2;
 
@@ -25,20 +25,22 @@ public class Manche {
 
         grilleJeu = new int [23];
         //Situation du joueur 1 au début de la partie
-        grilleJeu[0] = 1;
-        joueur1.position = 0;
+        grilleJeu[10] = 1;
+        joueur1.position = 10;
         joueur1.direction = 1;
         //Situation du joueur 2 au début de la partie
-        grilleJeu[22] = 2;
-        joueur2.position = 22;
+        grilleJeu[14] = 2;
+        joueur2.position = 14;
         joueur2.direction = -1;
         remplirMain(joueur1);
         remplirMain(joueur2);
         System.out.println("Pioche complete : " + piocheCartes);
-        listerCoups(joueur1);
-        listerCoups(joueur2);
 
         tourJoueur = 1;
+
+    }
+    public void clickCarte(){
+        //listerCoups(joueur1, p.jeu.selectedCarte);
 
     }
 
@@ -69,47 +71,43 @@ public class Manche {
         return res;
     }
 
-    public void listerCoups(JoueurHumain j){
+    public void listerCoups(JoueurHumain j, CarteIHM carte){
         int newPos;
         int dir = j.direction;
-        System.out.println("main complete joueur : " + j.main);
-        for(int i=0;i<j.main.size();i++){
-            int valeurCarte = j.main.get(i);
-            System.out.println("carte : " + valeurCarte);
-            if(dir == 1) { // joueur à gauche
-                if(j.position >= valeurCarte){
-                    newPos = j.position - valeurCarte;
-                    System.out.println("peut reculer en " + newPos);
-                }
-                newPos = j.position + valeurCarte;
-                if(newPos <= 22){
-                    if(newPos == joueur2.position ){
-                        System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
-                    }else if(newPos < joueur2.position){
-                        System.out.println("peut avancer en " + newPos);
-                    }else{
-                        System.out.println("bloqué par joueur");
-                    }
+        int valeurCarte = carte.getValeur();
+        System.out.println("carte : " + valeurCarte);
+        if(dir == 1) { // joueur à gauche
+            if(j.position >= valeurCarte){
+                newPos = j.position - valeurCarte;
+                System.out.println("peut reculer en " + newPos);
+            }
+            newPos = j.position + valeurCarte;
+            if(newPos <= 22){
+                if(newPos == joueur2.position ){
+                    System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
+                }else if(newPos < joueur2.position){
+                    System.out.println("peut avancer en " + newPos);
+                }else{
+                    System.out.println("bloqué par joueur");
                 }
             }
+        }
 
-            if(dir == -1){ // joueur à droite
-                if(j.position +valeurCarte <= 22){
-                    newPos = j.position + valeurCarte;
-                    System.out.println("peut reculer en " + newPos);
-                }
+        if(dir == -1){ // joueur à droite
+            if(j.position +valeurCarte <= 22){
                 newPos = j.position + valeurCarte;
-                if(newPos >= 0){
-                    if(newPos == joueur1.position ){
-                        System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
-                    }else if(newPos > joueur2.position){
-                        System.out.println("peut avancer en " + newPos);
-                    }else{
-                        System.out.println("bloqué par joueur");
-                    }
+                System.out.println("peut reculer en " + newPos);
+            }
+            newPos = j.position + valeurCarte;
+            if(newPos >= 0){
+                if(newPos == joueur1.position ){
+                    System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
+                }else if(newPos > joueur2.position){
+                    System.out.println("peut avancer en " + newPos);
+                }else{
+                    System.out.println("bloqué par joueur");
                 }
             }
-
         }
     }
 
