@@ -50,3 +50,4 @@ Merge votre branche dans la main :
 >Choisir [nom de la branche] dans le bouton "compare"\
 >Cliquer sur "Create pull request" en vert\
 >Entrer une description et un commentaire (si besoin)
+
