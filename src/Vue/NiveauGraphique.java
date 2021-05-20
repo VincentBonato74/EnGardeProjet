@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -20,7 +21,7 @@ import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {
     Jeu jeu;
-    Image fond, nom, joueur1, joueur2, sol, map, teteJ1, teteJ2, TiretBleu, TiretRouge, NomJ1, NomJ2;
+    Image fondMenu, fond, joueur1, joueur2, sol, map, teteJ1, teteJ2, TiretBleu, TiretRouge, NomJ1, NomJ2;
     int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurNom, largeurNom;
     int hauteurCase, hauteurLuke, hauteurVador, largeurVador, yPoint, xPointGauche, xPointDroit, hauteurTiret, largeurTiret, yNom, xNom;
     int hauteur2, largeur2;
@@ -29,7 +30,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
     Random r;
     Clip clip;
     Graphics2D drawable;
-    boolean Menu, Partie, PartieSet, MenuSet;
+    boolean Menu, Partie, Option, PartieSet, MenuSet, OptionSet;
+    public int compteur;
 
     private Image chargeImage(String nom){
         Image img = null;
@@ -56,7 +58,10 @@ public class NiveauGraphique extends JComponent implements Observateur {
             AudioInputStream input = AudioSystem.getAudioInputStream(new File("res/Music/Duel"+nb+".wav"));
             clip = AudioSystem.getClip();
             clip.open(input);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-30.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+            //gainControl.setValue(0.0f);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,8 +74,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         teteJ2 = chargeImage("Vador_Head");
         TiretBleu = chargeImage("TiretBleu");
         TiretRouge = chargeImage("TiretRouge");
+        fondMenu = chargeImage("MenuDroitTest");
         fond = chargeImage("Menu");
-        nom = chargeImage("NomSW");
         NomJ1 = chargeImage("NomJ1");
         NomJ2 = chargeImage("NomJ2");
 
@@ -97,10 +102,12 @@ public class NiveauGraphique extends JComponent implements Observateur {
         hauteur = getSize().height;
 
         drawable.clearRect(0, 0, largeur, hauteur);
-        if(!Menu && Partie){
+        if(!Menu && Partie && !Option){
             tracerPartie();
-        }else if(Menu && !Partie){
+        }else if(Menu && !Partie && !Option){
             tracerMenu();
+        }else if(!Menu && !Partie && Option){
+            tracerRegles();
         }
     }
 
@@ -109,6 +116,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
             AudioInputStream input = AudioSystem.getAudioInputStream(new File("res/Music/Menu.wav"));
             clip = AudioSystem.getClip();
             clip.open(input);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-30.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,8 +132,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
     public void tracerMenu(){
         if(!MenuSet){
-            //stopMusique();
-            //startMusique();
+            stopMusique();
+            startMusique();
         }
 
         PartieSet = false;
@@ -136,14 +145,26 @@ public class NiveauGraphique extends JComponent implements Observateur {
         yNom = (int)Math.round(hauteur*0.05);
 
         drawable.clearRect(0, 0, largeur, hauteur);
-        drawable.drawImage(fond, 0,0,largeur, hauteur, null);
-        drawable.drawImage(nom, xNom, yNom, largeurNom, hauteurNom ,null);
+        drawable.drawImage(fondMenu, 0,0,largeur, hauteur, null);
     }
 
+    public void tracerRegles(){
+        largeurNom = (int)Math.round(largeur*0.30);
+        hauteurNom = (int)Math.round(hauteur*0.25);
+        xNom = (int)Math.round(largeur*0.35);
+        yNom = (int)Math.round(hauteur*0.05);
+
+        drawable.clearRect(0, 0, largeur, hauteur);
+        drawable.drawImage(fond, 0,0,largeur, hauteur, null);
+
+        if(compteur == 0){
+            drawable.drawImage(teteJ1, 150, 150, 150,150, null);
+        }
+    }
 
     public void tracerPartie(){
         if(!PartieSet){
-            //stopMusique();
+            stopMusique();
             randomDecors();
         }
 
@@ -215,8 +236,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         metAJour();
     }
 
-    public void changeBackground() {
-        if(MenuSet && !PartieSet){
+    public void changeBackground(boolean b1, boolean b2, boolean b3) {
+        /*if(MenuSet && !PartieSet){
             Menu = false;
             Partie = true;
             metAJour();
@@ -224,6 +245,10 @@ public class NiveauGraphique extends JComponent implements Observateur {
             Menu = true;
             Partie = false;
             metAJour();
-        }
+        }*/
+        Menu = b1;
+        Partie = b2;
+        Option = b3;
+        metAJour();
     }
 }

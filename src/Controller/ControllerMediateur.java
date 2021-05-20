@@ -68,7 +68,22 @@ public class ControllerMediateur implements CollecteurEvenements {
     {
         switch (c) {
 			case "Niveau":
-				inter.changeBackground();
+				inter.changeBackground(false, true, false);
+				break;
+			case "Option":
+				inter.changeBackground(false, false, true);
+				break;
+			case "Regle":
+				break;
+			case "Suivant":
+				if(inter.niv().compteur < 10){
+					inter.niv().compteur++;
+				}
+				break;
+			case "Revenir":
+				if(inter.niv().compteur > 0){
+					inter.niv().compteur--;
+				}
 				break;
 			case "quit":
 				System.exit(0);
