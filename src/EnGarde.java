@@ -1,5 +1,7 @@
-import Modele.*;
 import Controller.ControllerMediateur;
+import Modele.Jeu;
+import Modele.Manche;
+import Modele.Partie;
 import Vue.InterfaceGraphique;
 
 public class EnGarde {

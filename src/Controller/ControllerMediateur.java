@@ -15,6 +15,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 	int decompte;
 	Sequence<Animation> animations;
 	InterfaceGraphique inter;
+	int hauteur, largeur;
 
 	public ControllerMediateur(Jeu j){
 		jeu = j;
@@ -30,6 +31,9 @@ public class ControllerMediateur implements CollecteurEvenements {
 	}
 
 	public void tictac(){
+		if(inter.getMenu()){
+			inter.MAJPanelMenu();
+		}
 		Iterateur<Animation> it = animations.iterateur();
 		while(it.aProchain()){
 			Animation anim = it.prochain();
@@ -63,7 +67,9 @@ public class ControllerMediateur implements CollecteurEvenements {
     public boolean commande(String c)
     {
         switch (c) {
-
+			case "Niveau":
+				inter.changeBackground();
+				break;
 			case "quit":
 				System.exit(0);
 				break;
