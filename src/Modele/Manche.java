@@ -9,6 +9,7 @@ public class Manche extends Historique<Coup>{
     static final int ATTAQUER = 3;
     static final int ATTAQUE_INDIRECTE = 4;
     static final int BLOQUER = 5;
+    public int NOMBRE_CASES = 23;
 
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
@@ -30,7 +31,7 @@ public class Manche extends Historique<Coup>{
         //Initialiser la pioche de la manche
         initialiserPioche();
 
-        grilleJeu = new int [23];
+        grilleJeu = new int [NOMBRE_CASES];
         //Situation du joueur 1 au début de la partie
         grilleJeu[0] = 1;
         joueur1.position = 0;
@@ -102,6 +103,7 @@ public class Manche extends Historique<Coup>{
                     //Coup coup = new Coup()
                     //joue(1,valeurCarte);
                 }else{
+                    CaseIHM.get(newPos).updateEtat(0);
                     System.out.println("bloqué par joueur");
                 }
             }
@@ -133,6 +135,11 @@ public class Manche extends Historique<Coup>{
         nouveau(cp);
         //if ()
         partie.Joueur(tourJoueur).supprMain(partie.jeu.selectedCarte.getId());
+
+        //efface les cases select
+        for (int i = 0; i < CaseIHM.size(); i++){
+            CaseIHM.get(i).updateEtat(0);
+        }
         changeTourJoueur(tourJoueur);
 
     }

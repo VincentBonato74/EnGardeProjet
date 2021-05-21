@@ -246,15 +246,25 @@ public class NiveauGraphique extends JComponent implements Observateur {
             }
         }
 
-        for(int c = 0; c < 23; c++){
+        for(int c = 0; c < jeu.partie().manche().NOMBRE_CASES; c++){
             int x = c * largeurCase;
             int y = (int) Math.round(hauteur * 0.62);
+
+            if (jeu.partie().manche().getCaseIHM().size() < jeu.partie().manche().NOMBRE_CASES){
+                jeu.partie().manche().initCaseIHM(c, grilleJeu[c], x, y, largeurCase, hauteurCase, 0);
+            } else {
+                jeu.partie().manche().updateCaseIHM(c, grilleJeu[c], x, y, largeurCase, hauteurCase);
+            }
+
+
             drawable.drawImage(sol, x, y, largeurCase, hauteurCase, null);
             if(grilleJeu[c] == 1){
                 drawable.drawImage(joueur1, x, (int)Math.round(y-hauteurLuke+(hauteurCase*0.5)), largeurCase, hauteurLuke, null);
             }else if(grilleJeu[c] == 2){
                 drawable.drawImage(joueur2, x, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), largeurVador, hauteurVador, null);
             }
+
+            affichePossibilites(drawable);
         }
 
         afficheMainJoueur(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), drawable);
