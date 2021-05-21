@@ -41,8 +41,8 @@ public class ControllerMediateur implements CollecteurEvenements {
 			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
-					System.out.print("Carte: " + c.getValeur() + "\n");
-					System.out.println("clic en : x :" + x + " y :" + y );
+
+
 
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
 

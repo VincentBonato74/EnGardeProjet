@@ -2,6 +2,7 @@ package Vue;
 
 import Controller.JoueurHumain;
 import Modele.Jeu;
+import Modele.SelectionCaseIHM;
 import Patterns.Observateur;
 
 import javax.imageio.ImageIO;
@@ -13,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {
@@ -143,7 +145,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             clip = AudioSystem.getClip();
             clip.open(input);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-30.0f);
+            gainControl.setValue(-80.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             e.printStackTrace();
@@ -244,15 +246,25 @@ public class NiveauGraphique extends JComponent implements Observateur {
             drawable.drawImage(TiretRouge, xPointDroit-((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
         }
 
-        for(int c = 0; c < 23; c++){
+        for(int c = 0; c < jeu.partie().manche().NOMBRE_CASES; c++){
             int x = c * largeurCase;
             int y = (int) Math.round(hauteur * 0.62);
+
+            if (jeu.partie().manche().getCaseIHM().size() < jeu.partie().manche().NOMBRE_CASES){
+                jeu.partie().manche().initCaseIHM(c, grilleJeu[c], x, y, largeurCase, hauteurCase, 0);
+            } else {
+                jeu.partie().manche().updateCaseIHM(c, grilleJeu[c], x, y, largeurCase, hauteurCase);
+            }
+
+
             drawable.drawImage(sol, x, y, largeurCase, hauteurCase, null);
             if(grilleJeu[c] == 1){
                 drawable.drawImage(joueur1, x, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), largeurVador, hauteurVador, null);
             }else if(grilleJeu[c] == 2){
                 drawable.drawImage(joueur2, x+largeurCase, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), -largeurVador, hauteurVador, null);
             }
+
+            affichePossibilites(drawable);
         }
 
         afficheMainJoueur(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), drawable);
@@ -302,10 +314,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
             x = x+largeurCarte;
             drawable.drawImage(cartes[valeurCarte], x , y, largeurCarte, hauteurCarte, null);
             if(j.getCarteI().size() < 5){
-                System.out.println("x: " + x + " y: " + y + " largeur" + largeurCarte + "hauteurCarte" + hauteurCarte );
                 j.initCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             } else {
-                System.out.println("x: " + x + " y: " + y + " largeur" + largeurCarte + "hauteurCarte" + hauteurCarte );
                 j.updateCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             }
 
@@ -315,6 +325,31 @@ public class NiveauGraphique extends JComponent implements Observateur {
             }
 
         }
+    }
+
+    public void affichePossibilites(Graphics2D drawable){
+        ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
+        CaseIHM = jeu.partie().manche().CaseIHM;;
+        for(int i = 0; i< CaseIHM.size(); i++)
+        {
+            int etat = CaseIHM.get(i).getEtat();
+
+            switch(etat){
+                case 1:
+                    drawable.setColor(Color.BLUE);
+                    drawable.fillRect(CaseIHM.get(i).getX(), CaseIHM.get(i).getY() - CaseIHM.get(i).getHauteur(), CaseIHM.get(i).getLargeur(), CaseIHM.get(i).getHauteur()*2);
+                    break;
+                case 2:
+                    drawable.setColor(Color.RED);
+                    drawable.fillRect(CaseIHM.get(i).getX(), CaseIHM.get(i).getY() - CaseIHM.get(i).getHauteur(), CaseIHM.get(i).getLargeur(), CaseIHM.get(i).getHauteur()*2);
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+
     }
 
     //Fonction qui met à jour les booléens pour changer l'affichage de la fenêtre en fonction de la page

@@ -2,9 +2,12 @@ package Modele;
 
 import Patterns.Observable;
 
+import java.util.ArrayList;
+
 public class Jeu extends Observable {
     Partie courant;
     public CarteIHM selectedCarte;
+    public SelectionCaseIHM selectedCase;
 
     public Jeu()
     {
@@ -36,6 +39,11 @@ public class Jeu extends Observable {
     }
 
     public void SelectionCarte(int id, int val ,int x, int y, int l, int h) {
+        ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
+        CaseIHM = partie().manche().CaseIHM;;
+        for (int i = 0; i < CaseIHM.size(); i++){
+            partie().manche().CaseIHM.get(i).updateEtat(0);
+        }
         selectedCarte = new CarteIHM(id, val, x, y, l, h);
         miseAJour();
     }
