@@ -17,16 +17,10 @@ public class JoueurHumain extends Joueur {
 
     }
 
-    public boolean joue(int l, int c){
-        /*if(jeu.niveau().estJouable(l, c)){
-            Coup cp = jeu.determineCoup(l, c);
-            jeu.jouerCoup(cp);
-            return true;
-        }else{
-            System.out.println("Coup Non Jouable");
-            return false;
-        }*/
-        return false;
+
+    public void supprMain(int index){
+
+        main.set(index,0);
     }
 
     public void initCarteI(int id, int valeur, int Cx, int Cy, int l, int h){
@@ -79,7 +73,7 @@ public class JoueurHumain extends Joueur {
 
     @Override
         // Renvoie l'indice où le joueur serait s'il se déplaçait vers l'arriere
-    int targetArriere(int val) {
+    public int targetArriere(int val) {
         return this.position+(this.direction*(-val));
     }
 }

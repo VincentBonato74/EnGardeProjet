@@ -8,6 +8,7 @@ import Structures.SequenceListe;
 import Vue.CollecteurEvenements;
 import Vue.InterfaceGraphique;
 import Vue.NiveauGraphique;
+import Modele.Coup;
 
 public class ControllerMediateur implements CollecteurEvenements {
 	Jeu jeu;
@@ -17,8 +18,6 @@ public class ControllerMediateur implements CollecteurEvenements {
 	int decompte;
 	Sequence<Animation> animations;
 	InterfaceGraphique inter;
-	NiveauGraphique niv;
-	int hauteur, largeur;
 
 	public ControllerMediateur(Jeu j){
 		jeu = j;
@@ -37,8 +36,8 @@ public class ControllerMediateur implements CollecteurEvenements {
 	public void clickCarte(int x, int y){
 		//System.out.print("joueur: " + jeu.partie().Joueur(joueurCourant).carteI + "\n");
 		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
-		for(int i = 0; i < jeu.partie().Joueur(joueurCourant).getCarteI().size(); i++){
-			CarteIHM c = jeu.partie().Joueur(joueurCourant).getCarteI().get(i);
+		for(int i = 0; i < jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().size(); i++){
+			CarteIHM c = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().get(i);
 			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
@@ -46,11 +45,34 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
 
-					 jeu.partie().manche().listerCoups(jeu.partie().Joueur(joueurCourant), jeu.selectedCarte);
+					 jeu.partie().manche().listerCoups(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), jeu.selectedCarte);
+
+
 				}
 			}
 		}
 	}
+
+	public void avancer()
+	{
+		int[] valeurs= new int[5];
+		valeurs[0] = jeu.selectedCarte.getValeur();
+		Coup cp = jeu.determinerCoup(1, valeurs,jeu.partie().manche().grilleJeu);
+		jeu.jouerCoup(cp);
+		jeu.selectedCarte.reset();
+
+	}
+
+	public void reculer()
+	{
+		int[] valeurs= new int[5];
+		valeurs[0] = jeu.selectedCarte.getValeur();
+		Coup cp = jeu.determinerCoup(2, valeurs,jeu.partie().manche().grilleJeu);
+		jeu.jouerCoup(cp);
+		jeu.selectedCarte.reset();
+	}
+
+
 
 	public void tictac(){
 		if(inter.getMenu()){
@@ -111,6 +133,14 @@ public class ControllerMediateur implements CollecteurEvenements {
 				System.exit(0);
 				break;
 			case "fullscreen":
+				break;
+			case "avancer":
+				avancer();
+
+				//System.out.println("Tour du Joueur (3) :" + jeu.partie().manche().getTourJoueur());
+				break;
+			case "reculer":
+				reculer();
 				break;
 			default:
 				return false;

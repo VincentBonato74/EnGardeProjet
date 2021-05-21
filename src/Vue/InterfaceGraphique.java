@@ -15,6 +15,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
     JPanel pan, optionGauche, optionDroit;
     public int hauteurPanel, largeurPanel;
     JButton Niveau, Option, Charger, Quitter, Droit, Gauche;
+    JButton avancer, reculer;
 
     InterfaceGraphique(Jeu j,CollecteurEvenements c){
         jeu = j;
@@ -31,6 +32,29 @@ public class InterfaceGraphique implements Runnable, Observateur {
         return niv;
     }
 
+    private JLabel createLabel(String s) {
+        JLabel lab = new JLabel(s);
+        lab.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return lab;
+    }
+
+    private JToggleButton createToggleButton(String s, String c) {
+        JToggleButton but = new JToggleButton(s);
+        but.addActionListener(new AdaptateurCommande(control, c));
+        but.setAlignmentX(Component.CENTER_ALIGNMENT);
+        but.setFocusable(false);
+        return but;
+    }
+
+    private JButton createButton(String s, String c) {
+        JButton but = new JButton(s);
+        but.addActionListener(new AdaptateurCommande(control, c));
+        but.setAlignmentX(Component.CENTER_ALIGNMENT);
+        but.setFocusable(false);
+        return but;
+    }
+
+
     @Override
     public void run() {
         frame = new JFrame("En Garde");
@@ -41,6 +65,24 @@ public class InterfaceGraphique implements Runnable, Observateur {
 
         Timer chrono = new Timer(16 , new AdaptateurTemps(control));
         chrono.start();
+        // Décompte des pas et poussées
+        Box barreLaterale = Box.createVerticalBox();
+        barreLaterale.add(createLabel("En Garde"));
+        barreLaterale.add(Box.createGlue());
+
+        avancer = createButton("Avancer", "avancer");
+        barreLaterale.add(avancer);
+
+        reculer = createButton("Reculer","reculer");
+        barreLaterale.add(reculer);
+
+        frame.add(barreLaterale, BorderLayout.LINE_END);
+
+
+
+
+        Timer time = new Timer(16, new AdaptateurTemps(control));
+        time.start();
 
         control.fixerInterfaceGraphique(this);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

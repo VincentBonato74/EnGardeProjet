@@ -2,7 +2,7 @@ package Modele;
 import java.util.*;
 import Controller.*;
 
-public class Manche {
+public class Manche extends Historique<Coup>{
 
     static final int AVANCER = 1;
     static final int RECULER = 2;
@@ -13,8 +13,8 @@ public class Manche {
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     public int[] grilleJeu;
-    int tourJoueur;
-    JoueurHumain joueur1, joueur2, joueurCourant;
+    public int tourJoueur;
+    JoueurHumain joueur1, joueur2;
 
 
     public Manche(Partie p){
@@ -31,12 +31,12 @@ public class Manche {
 
         grilleJeu = new int [23];
         //Situation du joueur 1 au début de la partie
-        grilleJeu[10] = 1;
-        joueur1.position = 10;
+        grilleJeu[0] = 1;
+        joueur1.position = 0;
         joueur1.direction = 1;
         //Situation du joueur 2 au début de la partie
-        grilleJeu[14] = 2;
-        joueur2.position = 14;
+        grilleJeu[22] = 2;
+        joueur2.position = 22;
         joueur2.direction = -1;
         remplirMain(joueur1);
         remplirMain(joueur2);
@@ -45,6 +45,7 @@ public class Manche {
         tourJoueur = 1;
 
     }
+
     public void clickCarte(){
         //listerCoups(joueur1, p.jeu.selectedCarte);
 
@@ -61,6 +62,7 @@ public class Manche {
         System.out.println("Pioche melangee :" + piocheCartes);
 
     }
+
     public void remplirMain(JoueurHumain j){
         while(j.main.size() < 5){
             int carte = pioche();
@@ -93,6 +95,8 @@ public class Manche {
                     System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
                 }else if(newPos < joueur2.position){
                     System.out.println("peut avancer en " + newPos);
+                    //Coup coup = new Coup()
+                    //joue(1,valeurCarte);
                 }else{
                     System.out.println("bloqué par joueur");
                 }
@@ -117,59 +121,13 @@ public class Manche {
         }
     }
 
-    public void jouerCoup(Coup cp)
-    {
+    public void jouerCoup(Coup cp) {
         cp.fixerManche(this);
-        //nouveau(cp)
+        nouveau(cp);
+        //if ()
+        partie.Joueur(tourJoueur).supprMain(partie.jeu.selectedCarte.getId());
+        changeTourJoueur(tourJoueur);
 
-        //============================================ Recupérer le joueur courant
-        this.joueurCourant = Joueur(tourJoueur);
-
-        //============================================ Recupérer l'action (avancer, reculer, attaquer, etc.)
-        Action action = cp.GetAction();
-
-        //============================================ CAS Action = Avancer (AVANCER: constante int)
-        if(action.id == AVANCER){
-            /* TDO: déplacement = 1 carte
-             * Faut qu'on se mette au point si action.valeurs c'est l'indice cartes selectionnées dans la main
-             * OU on y insère seuelement les cartes choisies
-             * En gros attaque: [][][3][3][]
-             * ou [3][3][][][]
-             * On additionne la valeur de toutes les cartes selectionnées.
-             * Même si on en a pas selectionné 5, c'est pas grave.
-             */
-            int nbDeplacement = 0;
-            for(int i=0; i<5; i++){
-                nbDeplacement += action.valeurs[i];
-            }
-            // Récupération de l'indice où le joueur se déplacerait
-            int target = this.joueurCourant.targetAvant(nbDeplacement);
-
-            // Vérification de disponibilité
-            if (target < this.grilleJeu.length && estVide(this.grilleJeu[target])){
-
-                // On met à jour le joueur courant
-                this.joueurCourant.deplace(target);
-
-                int oldPosJ1 = this.joueur1.getPosition();
-                int oldPosJ2 = this.joueur2.getPosition();
-
-                if((tourJoueur%2)+1 == 1){
-                    this.joueur1 = joueurCourant;
-                } else {
-                    this.joueur2 = joueurCourant;
-                }
-                // On met à jour les infos générales du jeu.
-                miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
-            } else {
-                System.out.println("Déplacement impossible, personnage sur la case destination ou destination hors map");
-            }
-            // Enregistrer coup
-        }
-        else if(action.id == RECULER) {
-            System.out.println("action reculer (TODO)");
-            // TDO
-        }
     }
 
     public void miseAJourGrille(int oldPosJ1, int oldPosJ2, int posJ1, int posJ2){
@@ -186,8 +144,64 @@ public class Manche {
         }
     }
 
-    public Coup joue()
-    {
+
+    public Coup joue(int type, int[] valeurs, int[] grilleJeu){
+        JoueurHumain joueurCourant;
+        Action action = new Action(type, valeurs);
+        Coup coupCourrant = new Coup(grilleJeu, action);
+
+        //_____________________  Recupérer le joueur courant
+        System.out.println("Tour du joueur (2) : " + tourJoueur);
+        joueurCourant = partie.Joueur(tourJoueur);
+
+        //======================================================================= CAS ACTION EST UN DPLACEMENT
+        if(type == AVANCER || type == RECULER) {
+
+            //_____________________ Détermine de combien de cases on va se déplacer
+            int nbDeplacement = valeurs[0];
+
+            //_____________________ Récuperation des positions courantes
+            int target = 0;
+            int oldPosJ1 = this.joueur1.getPosition();
+            int oldPosJ2 = this.joueur2.getPosition();
+
+            //======================================================================= CAS ACTION = AVANCER
+            if (type == AVANCER) {
+                target = joueurCourant.targetAvant(nbDeplacement);
+            }
+            //======================================================================= CAS ACTION = RECULER
+            else if (type == RECULER) {
+                target = joueurCourant.targetArriere(nbDeplacement);
+            }
+
+            if (target > 0 && target < grilleJeu.length && estVide(target) && testPosition(target)) {
+
+                //_____________________  On met à jour le joueur courant
+                joueurCourant.deplace(target);
+                if (tourJoueur == 1) {
+                    this.joueur1 = joueurCourant;
+                } else {
+                    this.joueur2 = joueurCourant;
+                }
+
+                //_____________________ On met à jour les infos générales du jeu.
+                miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
+                //joueurCourant.supprMain(partie.jeu.selectedCarte.getId());
+                System.out.println("main joueur 1 : " + joueur1.main);
+                System.out.println("main joueur 2 :" + joueur2.main);
+
+                /*if ((tourJoueur % 2) + 1 == 1) {
+                    this.joueur1.supprMain(partie.jeu.selectedCarte.getId());
+                } else {
+                    this.joueur2.supprMain(partie.jeu.selectedCarte.getId());
+                }*///
+
+            return coupCourrant;
+        } else {
+            System.out.println("Déplacement impossible, personnage sur la case destination ou destination hors map");
+                return null;
+            }
+        }
         return null;
     }
 
@@ -205,15 +219,34 @@ public class Manche {
         return grilleJeu[nb] == 0;
     }
 
-    public JoueurHumain Joueur(int numJoueur)
-    {
-        if(numJoueur == 1)
-        {
-            return joueur1;
+    public boolean testPosition(int target){
+        boolean res = true;
+        if (tourJoueur == 1){
+            if (target > joueur2.position){
+                res = false;
+            }
         }
         else
         {
-            return joueur2;
+            if(target < joueur1.position){
+                res = false;
+            }
+        }
+        return res;
+    }
+
+
+
+    public void changeTourJoueur(int tour)
+    {
+        if(tour == 1)
+        {
+                this.tourJoueur = 2;
+        }
+        else
+        {
+                this.tourJoueur = 1;
+
         }
     }
 

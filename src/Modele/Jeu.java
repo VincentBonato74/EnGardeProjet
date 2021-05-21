@@ -20,6 +20,11 @@ public class Jeu extends Observable {
         return courant;
     }
 
+    public Coup determinerCoup(int type, int[] valeurs, int[] grilleJeu)
+    {
+        return courant.manche().joue(type, valeurs, grilleJeu);
+    }
+
     public void jouerCoup(Coup cp) {
         if (cp == null) {
             System.out.println("Salut");

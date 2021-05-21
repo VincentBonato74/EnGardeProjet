@@ -7,14 +7,13 @@ public class AdaptateurCommande implements ActionListener {
     CollecteurEvenements control;
     String commande;
 
-    AdaptateurCommande(CollecteurEvenements c, String nom){
+    AdaptateurCommande(CollecteurEvenements c, String com) {
         control = c;
-        commande = nom;
+        commande = com;
     }
 
-
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
+    public void actionPerformed(ActionEvent e) {
         control.commande(commande);
     }
 }
