@@ -30,6 +30,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     Graphics2D drawable;
     boolean Menu, Partie, Option, PartieSet, MenuSet, OptionSet;
     public int compteur;
+    Image[] cartes = {};
 
     //Fonction Permettant de charger une image
     private Image chargeImage(String nom){
@@ -88,6 +89,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         carte3 = chargeImage("Card_3");
         carte4 = chargeImage("Card_4");
         carte5 = chargeImage("Card_5");
+        cartes = new Image[] { carte0, carte1, carte2, carte3, carte4, carte5};
 
         carte1_select = chargeImage("Card_1_selected");
         carte2_select = chargeImage("Card_2_selected");
@@ -317,29 +319,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
 
             x = x+largeurCarte;
-
-            switch(valeurCarte) {
-                case 1:
-                    drawable.drawImage(carte1, x , y, largeurCarte, hauteurCarte, null);
-                    break;
-                case 2:
-                    drawable.drawImage(carte2, x , y, largeurCarte, hauteurCarte, null);
-                    break;
-                case 3:
-                    drawable.drawImage(carte3, x, y, largeurCarte, hauteurCarte, null);
-                    break;
-                case 4:
-                    drawable.drawImage(carte4, x, y, largeurCarte, hauteurCarte, null);
-                    break;
-                case 5:
-                    drawable.drawImage(carte5, x, y, largeurCarte, hauteurCarte, null);
-                    break;
-                case 0:
-                    drawable.drawImage(carte0, x, y, largeurCarte, hauteurCarte, null);
-                    break;
-                default:
-                    break;
-            }
+            drawable.drawImage(cartes[valeurCarte], x , y, largeurCarte, hauteurCarte, null);
             if(j.getCarteI().size() < 5){
                 j.initCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             } else {
