@@ -1,13 +1,8 @@
 package Vue;
 
 import Controller.JoueurHumain;
-import Modele.CarteIHM;
 import Modele.Jeu;
 import Patterns.Observateur;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -17,9 +12,7 @@ import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {

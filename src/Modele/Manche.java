@@ -1,7 +1,6 @@
 package Modele;
 import java.util.*;
 import Controller.*;
-//import
 
 public class Manche {
 
