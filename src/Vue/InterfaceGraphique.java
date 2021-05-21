@@ -70,9 +70,8 @@ public class InterfaceGraphique implements Runnable, Observateur {
         frame.setSize(1100, 660);
         frame.setVisible(true);
 
-        // Décompte des pas et poussées
-        /*Box barreLaterale = Box.createVerticalBox();
-        barreLaterale.add(createLabel("En Garde"));
+        //Création de la barre lateral se trouvant dans le menu
+        barreLaterale = Box.createVerticalBox();
         barreLaterale.add(Box.createGlue());
 
         avancer = createButton("Avancer", "avancer");
@@ -81,7 +80,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         reculer = createButton("Reculer","reculer");
         barreLaterale.add(reculer);
 
-        frame.add(barreLaterale, BorderLayout.LINE_END);*/
+
 
         largeurPanel = (frame.getSize().width/2);
         hauteurPanel = (frame.getSize().height);
@@ -132,7 +131,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
     }
 
     //Fonction pour Ajouter ou enlever le Menu en fonction des pages
-    public void BoutonMenu(){
+    public void InterfaceMenu(){
         if(niv.Menu){
             frame.add(pan, BorderLayout.WEST);
         }else{
@@ -182,12 +181,23 @@ public class InterfaceGraphique implements Runnable, Observateur {
         }
     }
 
+    public void InterfacePartie(){
+        if(niv.Partie){
+            frame.add(barreLaterale, BorderLayout.LINE_END);
+            frame.revalidate();
+        }else{
+            frame.remove(barreLaterale);
+            frame.revalidate();
+        }
+    }
+
     //Fonction permettant de mettre a jour les booléens permettant de changer l'affichage de la fenêtre
     //en appelant la fonction changeBackground de NiveauGraphique
     public void changeBackground(boolean b1, boolean b2, boolean b3){
         niv.changeBackground(b1, b2, b3);
-        BoutonMenu();
+        InterfaceMenu();
         InterfaceRegles();
+        InterfacePartie();
     }
 
     //Fonction permettant de faire des boutons avec un hover

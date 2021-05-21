@@ -78,7 +78,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         teteJ2 = chargeImage("Vador_Head");
         TiretBleu = chargeImage("TiretBleu");
         TiretRouge = chargeImage("TiretRouge");
-        fondMenu = chargeImage("MenuDroitTest");
+        fondMenu = chargeImage("MenuDroit");
         fond = chargeImage("Menu");
         NomJ1 = chargeImage("NomJ1");
         NomJ2 = chargeImage("NomJ2");
