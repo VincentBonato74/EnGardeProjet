@@ -321,8 +321,10 @@ public class NiveauGraphique extends JComponent implements Observateur {
             x = x+largeurCarte;
             drawable.drawImage(cartes[valeurCarte], x , y, largeurCarte, hauteurCarte, null);
             if(j.getCarteI().size() < 5){
+                System.out.println("x: " + x + " y: " + y + " largeur" + largeurCarte + "hauteurCarte" + hauteurCarte );
                 j.initCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             } else {
+                System.out.println("x: " + x + " y: " + y + " largeur" + largeurCarte + "hauteurCarte" + hauteurCarte );
                 j.updateCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             }
 
