@@ -62,11 +62,16 @@ public class InterfaceGraphique implements Runnable, Observateur {
         niv.addMouseListener(new AdaptateurSouris(niv, control));
         frame.add(niv);
 
-
         Timer chrono = new Timer(16 , new AdaptateurTemps(control));
         chrono.start();
+
+        control.fixerInterfaceGraphique(this);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1100, 660);
+        frame.setVisible(true);
+
         // Décompte des pas et poussées
-        Box barreLaterale = Box.createVerticalBox();
+        /*Box barreLaterale = Box.createVerticalBox();
         barreLaterale.add(createLabel("En Garde"));
         barreLaterale.add(Box.createGlue());
 
@@ -76,18 +81,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         reculer = createButton("Reculer","reculer");
         barreLaterale.add(reculer);
 
-        frame.add(barreLaterale, BorderLayout.LINE_END);
-
-
-
-
-        Timer time = new Timer(16, new AdaptateurTemps(control));
-        time.start();
-
-        control.fixerInterfaceGraphique(this);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1100, 660);
-        frame.setVisible(true);
+        frame.add(barreLaterale, BorderLayout.LINE_END);*/
 
         largeurPanel = (frame.getSize().width/2);
         hauteurPanel = (frame.getSize().height);
@@ -110,7 +104,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
 
         Niveau = createButton("Nouvelle Partie", "Niveau", 0);
         Charger = createButton("Charger Une Partie", "Charger", 2);
-        Option = createButton("Option", "Option", 4);
+        Option = createButton("Règles du jeu", "Option", 4);
         Quitter = createButton("Quitter le jeu", "quit", 6);
         pan.add(Niveau);
         pan.add(Charger);

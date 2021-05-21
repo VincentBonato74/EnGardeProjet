@@ -163,7 +163,6 @@ public class NiveauGraphique extends JComponent implements Observateur {
             stopMusique();
             startMusique();
         }
-
         PartieSet = false;
         MenuSet = true;
 
@@ -249,9 +248,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
             int y = (int) Math.round(hauteur * 0.62);
             drawable.drawImage(sol, x, y, largeurCase, hauteurCase, null);
             if(grilleJeu[c] == 1){
-                drawable.drawImage(joueur1, x, (int)Math.round(y-hauteurLuke+(hauteurCase*0.5)), largeurCase, hauteurLuke, null);
+                drawable.drawImage(joueur1, x, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), largeurVador, hauteurVador, null);
             }else if(grilleJeu[c] == 2){
-                drawable.drawImage(joueur2, x, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), largeurVador, hauteurVador, null);
+                drawable.drawImage(joueur2, x+largeurCase, (int)Math.round(y-hauteurVador+(hauteurCase*0.5)), -largeurVador, hauteurVador, null);
             }
         }
 
@@ -339,15 +338,6 @@ public class NiveauGraphique extends JComponent implements Observateur {
     //Fonction qui met à jour les booléens pour changer l'affichage de la fenêtre en fonction de la page
     //que l'on veut afficher
     public void changeBackground(boolean b1, boolean b2, boolean b3) {
-        /*if(MenuSet && !PartieSet){
-            Menu = false;
-            Partie = true;
-            metAJour();
-        }else{
-            Menu = true;
-            Partie = false;
-            metAJour();
-        }*/
         Menu = b1;
         Partie = b2;
         Option = b3;
