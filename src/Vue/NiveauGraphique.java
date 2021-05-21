@@ -53,8 +53,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         Random r = new Random();
         int nb = r.nextInt(8);
         int nb2 = nb%4;
-        map = chargeImage("Map"+nb);
-        sol = chargeImage("Sol"+nb2);
+        map = chargeImage("Map/Map"+nb);
+        sol = chargeImage("Sol/Sol"+nb2);
         //Gestion Musique
         try {
             AudioInputStream input = AudioSystem.getAudioInputStream(new File("res/Music/Duel"+nb+".wav"));
@@ -74,37 +74,36 @@ public class NiveauGraphique extends JComponent implements Observateur {
         nbColonnes = 23;
 
         //Chargement des images
-        teteJ1 = chargeImage("Luke_Head");
-        teteJ2 = chargeImage("Vador_Head");
-        TiretBleu = chargeImage("TiretBleu");
-        TiretRouge = chargeImage("TiretRouge");
-        fondMenu = chargeImage("MenuDroit");
-        fond = chargeImage("Menu");
-        NomJ1 = chargeImage("NomJ1");
-        NomJ2 = chargeImage("NomJ2");
+        teteJ1 = chargeImage("Luke/Head");
+        teteJ2 = chargeImage("Vador/Head");
+        TiretBleu = chargeImage("Partie/TiretBleu");
+        TiretRouge = chargeImage("Partie/TiretRouge");
+        fondMenu = chargeImage("Menu/MenuDroit");
+        fond = chargeImage("Menu/Menu");
+        NomJ1 = chargeImage("Partie/NomJ1");
+        NomJ2 = chargeImage("Partie/NomJ2");
 
-        carte0 = chargeImage("Card_0");
-
-        carte1 = chargeImage("Card_1");
-        carte2 = chargeImage("Card_2");
-        carte3 = chargeImage("Card_3");
-        carte4 = chargeImage("Card_4");
-        carte5 = chargeImage("Card_5");
+        carte0 = chargeImage("Carte/Card_0");
+        carte1 = chargeImage("Carte/Card_1");
+        carte2 = chargeImage("Carte/Card_2");
+        carte3 = chargeImage("Carte/Card_3");
+        carte4 = chargeImage("Carte/Card_4");
+        carte5 = chargeImage("Carte/Card_5");
         cartes = new Image[] { carte0, carte1, carte2, carte3, carte4, carte5};
 
-        carte1_select = chargeImage("Card_1_selected");
-        carte2_select = chargeImage("Card_2_selected");
-        carte3_select = chargeImage("Card_3_selected");
-        carte4_select = chargeImage("Card_4_selected");
-        carte5_select = chargeImage("Card_5_selected");
+        carte1_select = chargeImage("Carte/Card_1_selected");
+        carte2_select = chargeImage("Carte/Card_2_selected");
+        carte3_select = chargeImage("Carte/Card_3_selected");
+        carte4_select = chargeImage("Carte/Card_4_selected");
+        carte5_select = chargeImage("Carte/Card_5_selected");
         cartesSel = new Image[] {carte1_select, carte2_select, carte3_select, carte4_select, carte5_select};
 
         //Chargement des images pour Animations
         joueurs1 = new Image[4];
         joueurs2 = new Image[4];
         for(int i = 0; i < 4; i++){
-            joueurs1[i] = chargeImage("luke_stand_0"+i);
-            joueurs2[i] = chargeImage("vador_stand_0"+i);
+            joueurs1[i] = chargeImage("Luke/stand_0"+i);
+            joueurs2[i] = chargeImage("Vador/stand_0"+i);
         }
 
         etape = 0;

@@ -32,20 +32,6 @@ public class InterfaceGraphique implements Runnable, Observateur {
         return niv;
     }
 
-    private JLabel createLabel(String s) {
-        JLabel lab = new JLabel(s);
-        lab.setAlignmentX(Component.CENTER_ALIGNMENT);
-        return lab;
-    }
-
-    private JToggleButton createToggleButton(String s, String c) {
-        JToggleButton but = new JToggleButton(s);
-        but.addActionListener(new AdaptateurCommande(control, c));
-        but.setAlignmentX(Component.CENTER_ALIGNMENT);
-        but.setFocusable(false);
-        return but;
-    }
-
     private JButton createButton(String s, String c) {
         JButton but = new JButton(s);
         but.addActionListener(new AdaptateurCommande(control, c));
@@ -90,7 +76,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
             {
                 super.paintComponent(g);
 
-                ImageIcon m = new ImageIcon("res/MenuGauche.png");
+                ImageIcon m = new ImageIcon("res/Menu/MenuGauche.png");
                 Image monImage = m.getImage();
                 g.drawImage(monImage, 0, 0,  (frame.getSize().width/2), (frame.getSize().height),this);
 
