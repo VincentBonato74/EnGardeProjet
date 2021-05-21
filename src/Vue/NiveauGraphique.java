@@ -51,7 +51,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     //Fonction qui choisi un décors au hasard et choisi le sol et la musique associée.
     public void randomDecors(){
         Random r = new Random();
-        int nb = r.nextInt(8);
+        int nb = r.nextInt(1000)%8;
         int nb2 = nb%4;
         map = chargeImage("Map"+nb);
         sol = chargeImage("Sol"+nb2);
@@ -61,7 +61,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             clip = AudioSystem.getClip();
             clip.open(input);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-30.0f);
+            gainControl.setValue(-80.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             //gainControl.setValue(0.0f);
         } catch (Exception e) {
@@ -128,7 +128,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             clip = AudioSystem.getClip();
             clip.open(input);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-30.0f);
+            gainControl.setValue(-80.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             e.printStackTrace();

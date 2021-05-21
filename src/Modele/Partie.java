@@ -21,6 +21,7 @@ public class Partie {
         J2Point = 0;
         PointJ1 = new int[5];
         PointJ2 = new int[5];
+        PointJ1[4] = 1;
     }
 
     public boolean aGagner(){

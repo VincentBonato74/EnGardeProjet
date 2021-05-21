@@ -69,7 +69,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
 
         Niveau = createButton("Nouvelle Partie", "Niveau", 0);
         Charger = createButton("Charger Une Partie", "Charger", 2);
-        Option = createButton("Option", "Option", 4);
+        Option = createButton("Règles du jeu", "Option", 4);
         Quitter = createButton("Quitter le jeu", "quit", 6);
         pan.add(Niveau);
         pan.add(Charger);
