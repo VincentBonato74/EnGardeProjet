@@ -9,11 +9,12 @@ public class Partie {
     Jeu jeu;
     Manche courant;
     JoueurHumain joueur1, joueur2;
+    int[] PointJ1;
+    int[] PointJ2;
 
     public Partie(Jeu j){
         jeu = j;
         initialisePartie();
-
     }
 
     public void initialisePartie(){
@@ -25,7 +26,8 @@ public class Partie {
         J2Gagnant = false;
         J1Point = 0;
         J2Point = 0;
-
+        PointJ1 = new int[5];
+        PointJ2 = new int[5];
     }
 
     public boolean aGagner(){
@@ -48,8 +50,15 @@ public class Partie {
     }
 
     public int getJ2Point(){
-        return J2Point;}
+        return J2Point;
+    }
 
+    public boolean estRougeJ1(int nb){
+        if(PointJ1[nb] == 1){
+            return true;
+        }
+        return false;
+    }
     public JoueurHumain Joueur(int numJoueur)
     {
         if(numJoueur == 1)
@@ -69,4 +78,10 @@ public class Partie {
 
 
 
+    public boolean estRougeJ2(int nb){
+        if(PointJ2[nb] == 1){
+            return true;
+        }
+        return false;
+    }
 }

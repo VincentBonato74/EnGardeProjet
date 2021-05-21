@@ -1,5 +1,5 @@
-import Modele.*;
 import Controller.ControllerMediateur;
+import Modele.*;
 import Vue.InterfaceGraphique;
 
 public class EnGarde {
