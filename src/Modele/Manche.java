@@ -174,7 +174,8 @@ public class Manche extends Historique<Coup>{
             else if (type == RECULER) {
                 target = joueurCourant.targetArriere(nbDeplacement);
             }
-            if (target > 0 && target < grilleJeu.length && estVide(this.grilleJeu[target])) {
+
+            if (target > 0 && target < grilleJeu.length && estVide(target) && testPosition(target)) {
 
                 //_____________________  On met à jour le joueur courant
                 joueurCourant.deplace(target);
