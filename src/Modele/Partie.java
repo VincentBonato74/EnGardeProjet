@@ -53,12 +53,6 @@ public class Partie {
         return J2Point;
     }
 
-    public boolean estRougeJ1(int nb){
-        if(PointJ1[nb] == 1){
-            return true;
-        }
-        return false;
-    }
     public JoueurHumain Joueur(int numJoueur)
     {
         if(numJoueur == 1)
@@ -76,12 +70,4 @@ public class Partie {
         return  courant;
     }
 
-
-
-    public boolean estRougeJ2(int nb){
-        if(PointJ2[nb] == 1){
-            return true;
-        }
-        return false;
-    }
 }

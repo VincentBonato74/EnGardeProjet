@@ -14,7 +14,7 @@ public class Manche extends Historique<Coup>{
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     public int[] grilleJeu;
     public int tourJoueur;
-    JoueurHumain joueur1, joueur2;
+    public JoueurHumain joueur1, joueur2;
 
 
     public Manche(Partie p){
@@ -34,10 +34,12 @@ public class Manche extends Historique<Coup>{
         grilleJeu[0] = 1;
         joueur1.position = 0;
         joueur1.direction = 1;
+        joueur1.vie = 5;
         //Situation du joueur 2 au début de la partie
         grilleJeu[22] = 2;
         joueur2.position = 22;
         joueur2.direction = -1;
+        joueur2.vie = 5;
         remplirMain(joueur1);
         remplirMain(joueur2);
         System.out.println("Pioche complete : " + piocheCartes);

@@ -11,6 +11,7 @@ public class JoueurHumain extends Joueur {
     public int position;
     public int direction;
     public ArrayList<CarteIHM> carteI = new ArrayList<>();
+    public int vie;
 
     public JoueurHumain(Jeu j){
         jeu = j;

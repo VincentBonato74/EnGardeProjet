@@ -31,6 +31,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     boolean Menu, Partie, Option, PartieSet, MenuSet, OptionSet;
     public int compteur;
     Image[] cartes = {};
+    Image[] cartesSel = {};
 
     //Fonction Permettant de charger une image
     private Image chargeImage(String nom){
@@ -96,7 +97,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         carte3_select = chargeImage("Card_3_selected");
         carte4_select = chargeImage("Card_4_selected");
         carte5_select = chargeImage("Card_5_selected");
-
+        cartesSel = new Image[] {carte1_select, carte2_select, carte3_select, carte4_select, carte5_select};
 
         //Chargement des images pour Animations
         joueurs1 = new Image[4];
@@ -222,25 +223,26 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
         drawable.clearRect(0, 0, largeur, hauteur);
         drawable.drawImage(map, 0, 0, largeur, hauteur, null);
+        //affichage de la tete et du nom des deux joueurs
         drawable.drawImage(teteJ1, xTeteGauche, yTete, dimensionTete ,dimensionTete,null);
         drawable.drawImage(teteJ2, xTeteDroite, yTete, dimensionTete ,dimensionTete,null);
-        for(int i = 0; i < 5; i++){
-            if(!jeu.partie().estRougeJ1(i)){
-                drawable.drawImage(TiretBleu, xPointGauche+((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
-            }else{
-                drawable.drawImage(TiretRouge, xPointGauche+((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
-            }
-            if(!jeu.partie().estRougeJ2(i)){
-                drawable.drawImage(TiretBleu, xPointDroit-((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
-            }else{
-                drawable.drawImage(TiretRouge, xPointDroit-((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
-            }
-            if(i == 0){
-                drawable.drawImage(NomJ1, xPointGauche+((i+1)*xTeteGauche), yNom, largeurNom, hauteurNom, null);
-            }
-            if(i==4){
-                drawable.drawImage(NomJ2, xPointDroit-((i+1)*xTeteGauche), yNom, largeurNom, hauteurNom, null);
-            }
+        drawable.drawImage(NomJ1, xPointGauche+(1*xTeteGauche), yNom, largeurNom, hauteurNom, null);
+        drawable.drawImage(NomJ2, xPointDroit-(5*xTeteGauche), yNom, largeurNom, hauteurNom, null);
+
+        // affichage des barres de vie à partir de la santé de chaque joueur
+        int joueur1Vie = jeu.partie().manche().joueur1.vie;
+        int joueur2Vie = jeu.partie().manche().joueur2.vie;
+        for(int i=0; i<joueur1Vie;i++){
+            drawable.drawImage(TiretBleu, xPointGauche+((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
+        }
+        for(int i=joueur1Vie; i<5;i++){
+            drawable.drawImage(TiretRouge, xPointGauche+((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
+        }
+        for(int i=0; i<joueur2Vie;i++){
+            drawable.drawImage(TiretBleu, xPointDroit-((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
+        }
+        for(int i=joueur2Vie; i<5;i++){
+            drawable.drawImage(TiretRouge, xPointDroit-((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
         }
 
         for(int c = 0; c < 23; c++){
@@ -278,26 +280,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
     public void selectCarte(int val ,int x, int y, int l, int h, Graphics2D drawable){
 
-
-        switch(val) {
-            case 1:
-                drawable.drawImage(carte1_select, x , y, l, h, null);
-                break;
-            case 2:
-                drawable.drawImage(carte2_select, x , y, l, h, null);
-                break;
-            case 3:
-                drawable.drawImage(carte3_select, x , y, l, h, null);
-                break;
-            case 4:
-                drawable.drawImage(carte4_select, x , y, l, h, null);
-                break;
-            case 5:
-                drawable.drawImage(carte5_select, x , y, l, h, null);
-                break;
-            default:
-                break;
-        }
+        drawable.drawImage(cartesSel[val-1],x,y,l,h,null);
     }
 
     public void afficheMainJoueur(JoueurHumain j, Graphics2D drawable){
