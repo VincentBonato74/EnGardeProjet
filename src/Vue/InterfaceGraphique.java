@@ -150,7 +150,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
     //Fonction Permettant de rendre responsive le panel du menu
     public void MAJPanelMenu(){
         if(largeurPanel != ((pan.getWidth() + getLargeur()) / 2)){
-            System.out.println("Redimmensionnement");
+
             largeurPanel = (pan.getWidth() + getLargeur()) / 2;
             hauteurPanel = (getHauteur());
             frame.remove(pan);
@@ -161,8 +161,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
             int yBouton = (int)Math.round(hauteurPanel * 0.05);
             int xBouton = (int)Math.round(largeurPanel * 0.25);
 
-            System.out.println(hauteurPanel);
-            System.out.println(largeurPanel);
+
 
             Niveau.setBounds(xBouton, yBouton, largeurBouton, hauteurBouton);
             Charger.setBounds(xBouton, (yBouton*2)+hauteurBouton, largeurBouton, hauteurBouton);

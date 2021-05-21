@@ -12,6 +12,7 @@ public class Manche extends Historique<Coup>{
 
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
+    public ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
     public int[] grilleJeu;
     public int tourJoueur;
     JoueurHumain joueur1, joueur2;
@@ -88,13 +89,16 @@ public class Manche extends Historique<Coup>{
             if(j.position >= valeurCarte){
                 newPos = j.position - valeurCarte;
                 System.out.println("peut reculer en " + newPos);
+                CaseIHM.get(newPos).updateEtat(1);
             }
             newPos = j.position + valeurCarte;
             if(newPos <= 22){
                 if(newPos == joueur2.position ){
+                    CaseIHM.get(newPos).updateEtat(2);
                     System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
                 }else if(newPos < joueur2.position){
                     System.out.println("peut avancer en " + newPos);
+                    CaseIHM.get(newPos).updateEtat(1);
                     //Coup coup = new Coup()
                     //joue(1,valeurCarte);
                 }else{
@@ -106,14 +110,17 @@ public class Manche extends Historique<Coup>{
         if(dir == -1){ // joueur à droite
             if(j.position +valeurCarte <= 22){
                 newPos = j.position + valeurCarte;
+                CaseIHM.get(newPos).updateEtat(1);
                 System.out.println("peut reculer en " + newPos);
             }
             newPos = j.position + valeurCarte;
             if(newPos >= 0){
                 if(newPos == joueur1.position ){
                     System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
+                    CaseIHM.get(newPos).updateEtat(2);
                 }else if(newPos > joueur2.position){
                     System.out.println("peut avancer en " + newPos);
+                    CaseIHM.get(newPos).updateEtat(1);
                 }else{
                     System.out.println("bloqué par joueur");
                 }
@@ -151,7 +158,7 @@ public class Manche extends Historique<Coup>{
         Coup coupCourrant = new Coup(grilleJeu, action);
 
         //_____________________  Recupérer le joueur courant
-        System.out.println("Tour du joueur (2) : " + tourJoueur);
+
         joueurCourant = partie.Joueur(tourJoueur);
 
         //======================================================================= CAS ACTION EST UN DPLACEMENT
@@ -187,8 +194,7 @@ public class Manche extends Historique<Coup>{
                 //_____________________ On met à jour les infos générales du jeu.
                 miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
                 //joueurCourant.supprMain(partie.jeu.selectedCarte.getId());
-                System.out.println("main joueur 1 : " + joueur1.main);
-                System.out.println("main joueur 2 :" + joueur2.main);
+
 
                 /*if ((tourJoueur % 2) + 1 == 1) {
                     this.joueur1.supprMain(partie.jeu.selectedCarte.getId());
@@ -203,6 +209,22 @@ public class Manche extends Historique<Coup>{
             }
         }
         return null;
+    }
+
+    public void initCaseIHM(int i, int val, int x, int y, int largeur, int hauteur, int etat){
+        SelectionCaseIHM caseI = new SelectionCaseIHM(i, val, x, y, largeur, hauteur, etat);
+        CaseIHM.add(caseI);
+    }
+    public void updateCaseIHM(int i, int val, int x, int y, int largeur, int hauteur){
+        CaseIHM.get(i).update(i, val, x, y, largeur, hauteur);
+    }
+
+    public void updateEtatCaseIHM(int id, int etat){
+        CaseIHM.get(id).updateEtat(etat);
+    }
+
+    public ArrayList<SelectionCaseIHM> getCaseIHM() {
+        return CaseIHM;
     }
 
     public int getTourJoueur(){ return tourJoueur;}
