@@ -59,15 +59,9 @@ public class ControllerMediateur implements CollecteurEvenements {
 		int[] valeurs= new int[5];
 		valeurs[0] = jeu.selectedCarte.getValeur();
 		Coup cp = jeu.determinerCoup(1, valeurs,jeu.partie().manche().grilleJeu);
-		System.out.println(jeu.partie().manche().getTourJoueur());
 		jeu.jouerCoup(cp);
-		jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).supprMain(jeu.selectedCarte.getId());
 		jeu.selectedCarte.reset();
 
-
-
-
-		//System.out.println("Tour du Joueur (1) : " + jeu.partie().manche().tourJoueur);
 	}
 
 	public void reculer()

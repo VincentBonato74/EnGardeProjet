@@ -32,12 +32,12 @@ public class Manche extends Historique<Coup>{
 
         grilleJeu = new int [23];
         //Situation du joueur 1 au début de la partie
-        grilleJeu[10] = 1;
-        joueur1.position = 10;
+        grilleJeu[0] = 1;
+        joueur1.position = 0;
         joueur1.direction = 1;
         //Situation du joueur 2 au début de la partie
-        grilleJeu[14] = 2;
-        joueur2.position = 14;
+        grilleJeu[22] = 2;
+        joueur2.position = 22;
         joueur2.direction = -1;
         remplirMain(joueur1);
         remplirMain(joueur2);
@@ -125,7 +125,8 @@ public class Manche extends Historique<Coup>{
     public void jouerCoup(Coup cp) {
         cp.fixerManche(this);
         nouveau(cp);
-
+        //if ()
+        partie.Joueur(tourJoueur).supprMain(partie.jeu.selectedCarte.getId());
         changeTourJoueur(tourJoueur);
 
     }
@@ -152,7 +153,7 @@ public class Manche extends Historique<Coup>{
 
         //_____________________  Recupérer le joueur courant
         System.out.println("Tour du joueur (2) : " + tourJoueur);
-        joueurCourant = Joueur(tourJoueur);
+        joueurCourant = partie.Joueur(tourJoueur);
 
         //======================================================================= CAS ACTION EST UN DPLACEMENT
         if(type == AVANCER || type == RECULER) {
@@ -193,7 +194,7 @@ public class Manche extends Historique<Coup>{
                     this.joueur1.supprMain(partie.jeu.selectedCarte.getId());
                 } else {
                     this.joueur2.supprMain(partie.jeu.selectedCarte.getId());
-                }*/
+                }*///
 
             return coupCourrant;
         } else {
@@ -218,16 +219,23 @@ public class Manche extends Historique<Coup>{
         return grilleJeu[nb] == 0;
     }
 
-    public JoueurHumain Joueur(int numJoueur) {
-        if(numJoueur == 1)
-        {
-            return joueur1;
+    public boolean testPosition(int target){
+        boolean res = true;
+        if (tourJoueur == 1){
+            if (target > joueur2.position){
+                res = false;
+            }
         }
         else
         {
-            return joueur2;
+            if(target < joueur1.position){
+                res = false;
+            }
         }
+        return res;
     }
+
+
 
     public void changeTourJoueur(int tour)
     {
