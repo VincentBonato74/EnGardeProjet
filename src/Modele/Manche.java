@@ -218,6 +218,7 @@ public class Manche extends Historique<Coup>{
             }
         }
     }
+
     public boolean peutAttaquer(CarteIHM carte,int pos, JoueurHumain j){ // regarde si la carte selectionnée lui permet d'attaquer l'autre joueur
         int distance;
         if(j.getDirection()==1){

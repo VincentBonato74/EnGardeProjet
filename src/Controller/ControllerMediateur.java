@@ -76,8 +76,6 @@ public class ControllerMediateur implements CollecteurEvenements {
 						jeu.partie().initialiseManche();
 
 					}
-
-
 				}
 			}
 		}

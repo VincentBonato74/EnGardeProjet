@@ -39,8 +39,8 @@ public class Partie {
         if(joueur1.vie == 0){
             J2Gagnant = true;
             return true;
-        }else if(J2Point == 5){
-            J2Gagnant = true;
+        }else if(joueur2.vie == 0){
+            J1Gagnant = true;
             return true;
         }
         return false;
@@ -50,13 +50,13 @@ public class Partie {
         courant.jouerCoup(cp);
     }
 
-    public int getJ1Point(){
+    /*public int getJ1Point(){
         return J1Point;
     }
 
     public int getJ2Point(){
         return J2Point;
-    }
+    }*/
 
     public JoueurHumain Joueur(int numJoueur)
     {
