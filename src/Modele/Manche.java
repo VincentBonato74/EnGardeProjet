@@ -83,7 +83,7 @@ public class Manche extends Historique<Coup>{
         return res;
     }
 
-    public void listerCoups(JoueurHumain j, CarteIHM carte){
+    public void listerCoups(JoueurHumain j, CarteIHM carte){ // lister tous les coups possible à partir d'une carte (action simple)
         int newPos;
         int dir = j.direction;
         int valeurCarte = carte.getValeur();
@@ -130,6 +130,10 @@ public class Manche extends Historique<Coup>{
                 }
             }
         }
+    }
+
+    public void listerCoupComplexe(JoueurHumain j, CarteIHM carte){ // coups composés de plusieurs cartes
+
     }
 
     public void jouerCoup(Coup cp) {
