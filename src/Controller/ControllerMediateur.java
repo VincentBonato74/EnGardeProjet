@@ -2,6 +2,7 @@ package Controller;
 
 import Modele.CarteIHM;
 import Modele.Jeu;
+import Modele.SelectionCaseIHM;
 import Structures.Iterateur;
 import Structures.Sequence;
 import Structures.SequenceListe;
@@ -9,6 +10,8 @@ import Vue.CollecteurEvenements;
 import Vue.InterfaceGraphique;
 import Vue.NiveauGraphique;
 import Modele.Coup;
+
+import java.util.ArrayList;
 
 public class ControllerMediateur implements CollecteurEvenements {
 	Jeu jeu;
@@ -41,12 +44,35 @@ public class ControllerMediateur implements CollecteurEvenements {
 			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
-
-
-
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
 
 					 jeu.partie().manche().listerCoups(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), jeu.selectedCarte);
+
+
+				}
+			}
+		}
+	}
+
+	public void clickDeplacement(int x, int y){
+		ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
+		CaseIHM = jeu.partie().manche().getCaseIHM();
+
+		for(int i = 0; i < CaseIHM.size(); i++){
+			SelectionCaseIHM c = CaseIHM.get(i);
+			if(c.getEtat() != 0 && x >= c.getX() && x <= (c.getX() + c.getLargeur())){
+				if((y >= c.getY() && y <= (c.getY() + c.getHauteur()))){
+
+
+					if (c.getEtat() == 1){
+						int[] valeurs= new int[5];
+						valeurs[0] = jeu.selectedCarte.getValeur();
+						Coup cp = jeu.determinerCoup(c.getId(), valeurs,jeu.partie().manche().grilleJeu);
+						jeu.jouerCoup(cp);
+						jeu.selectedCarte.reset();
+					} else if (c.getEtat() == 2){
+
+					}
 
 
 				}

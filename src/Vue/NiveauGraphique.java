@@ -251,9 +251,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
             int y = (int) Math.round(hauteur * 0.62);
 
             if (jeu.partie().manche().getCaseIHM().size() < jeu.partie().manche().NOMBRE_CASES){
-                jeu.partie().manche().initCaseIHM(c, grilleJeu[c], x, y, largeurCase, hauteurCase, 0);
+                jeu.partie().manche().initCaseIHM(c, grilleJeu[c], x, y - hauteurCase*3, largeurCase, hauteurCase*4, 0);
             } else {
-                jeu.partie().manche().updateCaseIHM(c, grilleJeu[c], x, y, largeurCase, hauteurCase);
+                jeu.partie().manche().updateCaseIHM(c, grilleJeu[c], x, y - hauteurCase*3, largeurCase, hauteurCase*4);
             }
 
 
@@ -355,12 +355,14 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
             switch(etat){
                 case 1:
-                    drawable.setColor(Color.BLUE);
-                    drawable.fillRect(CaseIHM.get(i).getX(), CaseIHM.get(i).getY() - CaseIHM.get(i).getHauteur(), CaseIHM.get(i).getLargeur(), CaseIHM.get(i).getHauteur()*2);
+                    Color cBlue = new Color(100, 250, 255, 20);
+                    drawable.setColor(cBlue);
+                    drawable.fillRect(CaseIHM.get(i).getX(), CaseIHM.get(i).getY(), CaseIHM.get(i).getLargeur(), CaseIHM.get(i).getHauteur());
+
                     break;
                 case 2:
                     drawable.setColor(Color.RED);
-                    drawable.fillRect(CaseIHM.get(i).getX(), CaseIHM.get(i).getY() - CaseIHM.get(i).getHauteur(), CaseIHM.get(i).getLargeur(), CaseIHM.get(i).getHauteur()*2);
+                    drawable.fillRect(CaseIHM.get(i).getX(), CaseIHM.get(i).getY(), CaseIHM.get(i).getLargeur(), CaseIHM.get(i).getHauteur());
                     break;
                 default:
                     break;
