@@ -117,12 +117,12 @@ public class Manche extends Historique<Coup>{
                 CaseIHM.get(newPos).updateEtat(1);
                 System.out.println("peut reculer en " + newPos);
             }
-            newPos = j.position + valeurCarte;
+            newPos = j.position - valeurCarte;
             if(newPos >= 0){
                 if(newPos == joueur1.position ){
                     System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
                     CaseIHM.get(newPos).updateEtat(2);
-                }else if(newPos > joueur2.position){
+                }else if(newPos > joueur1.position){
                     System.out.println("peut avancer en " + newPos);
                     CaseIHM.get(newPos).updateEtat(1);
                 }else{
@@ -165,17 +165,31 @@ public class Manche extends Historique<Coup>{
     }
 
 
-    public Coup joue(int type, int[] valeurs, int[] grilleJeu){
+    public Coup joue(int target, int[] valeurs, int[] grilleJeu){
         JoueurHumain joueurCourant;
-        Action action = new Action(type, valeurs);
+        Action action = new Action(1, valeurs);
         Coup coupCourrant = new Coup(grilleJeu, action);
+
+        int oldPosJ1 = this.joueur1.getPosition();
+        int oldPosJ2 = this.joueur2.getPosition();
+
 
         //_____________________  Recupérer le joueur courant
 
         joueurCourant = partie.Joueur(tourJoueur);
 
+        joueurCourant.deplace(target);
+        if (tourJoueur == 1) {
+            this.joueur1 = joueurCourant;
+        } else {
+            this.joueur2 = joueurCourant;
+        }
+
+        miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
+
+        return coupCourrant;
         //======================================================================= CAS ACTION EST UN DPLACEMENT
-        if(type == AVANCER || type == RECULER) {
+        /*if(type == AVANCER || type == RECULER) {
 
             //_____________________ Détermine de combien de cases on va se déplacer
             int nbDeplacement = valeurs[0];
@@ -206,22 +220,15 @@ public class Manche extends Historique<Coup>{
 
                 //_____________________ On met à jour les infos générales du jeu.
                 miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
-                //joueurCourant.supprMain(partie.jeu.selectedCarte.getId());
 
-
-                /*if ((tourJoueur % 2) + 1 == 1) {
-                    this.joueur1.supprMain(partie.jeu.selectedCarte.getId());
-                } else {
-                    this.joueur2.supprMain(partie.jeu.selectedCarte.getId());
-                }*///
 
             return coupCourrant;
         } else {
             System.out.println("Déplacement impossible, personnage sur la case destination ou destination hors map");
                 return null;
             }
-        }
-        return null;
+        }*/
+        //return null;
     }
 
     public void initCaseIHM(int i, int val, int x, int y, int largeur, int hauteur, int etat){
