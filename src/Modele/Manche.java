@@ -105,8 +105,38 @@ public class Manche extends Historique<Coup>{
 
     public int pioche(){ // le joueur récupère une carte dans l
         int res;
-        res = piocheCartes.get(0);
-        piocheCartes.remove(0);
+        if(piocheVide())
+        {
+            int Pj1 = 0, Pj2 = 0;
+            int distance = joueur2.getPosition() - joueur1.getPosition();
+            for (int i = 0; i < joueur1.getMain().size(); i++){
+                if(distance == joueur1.getMain().get(i)){
+                    Pj1 += 1;
+                }
+            }
+            for (int i = 0; i < joueur2.getMain().size(); i++){
+                if(distance == joueur2.getMain().get(i)){
+                    Pj2 += 1;
+                }
+            }
+
+            if (Pj1 < Pj2){
+                attaque(Pj2);
+                partie.initialiseManche();
+            }else if(Pj2 < Pj1){
+                attaque(Pj1);
+            } else if(Pj1 == Pj2){
+
+            }
+
+            return 0;
+
+        }
+        else{
+            res = piocheCartes.get(0);
+            piocheCartes.remove(0);
+        }
+
         return res;
     }
 

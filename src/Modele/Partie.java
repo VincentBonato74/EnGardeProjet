@@ -21,6 +21,8 @@ public class Partie {
 
         joueur1 = new JoueurHumain(jeu);
         joueur2 = new JoueurHumain(jeu);
+        joueur1.vie = 5;
+        joueur2.vie = 5;
         courant = new Manche(this);
         J1Gagnant = false;
         J2Gagnant = false;
@@ -74,5 +76,17 @@ public class Partie {
     {
         return  courant;
     }
+
+    /*public void ajoutePoint(int tourJoueur)
+    {
+        if(tourJoueur == 1)
+        {
+            J1Point +=1;
+        }
+        else
+        {
+            J2Point +=1;
+        }
+    }*/
 
 }
