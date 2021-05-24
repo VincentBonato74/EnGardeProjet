@@ -36,12 +36,14 @@ public class Manche extends Historique<Coup>{
         grilleJeu[10] = 1;
         joueur1.position = 10;
         joueur1.direction = 1;
-        joueur1.vie = 5;
+        //joueur1.vie = 5;
         //Situation du joueur 2 au début de la partie
         grilleJeu[15] = 2;
         joueur2.position = 15;
         joueur2.direction = -1;
-        joueur2.vie = 5;
+        //joueur2.vie = 5;
+        viderMain(joueur1);
+        viderMain(joueur2);
         remplirMain(joueur1);
         remplirMain(joueur2);
         System.out.println("Pioche complete : " + piocheCartes);
@@ -49,10 +51,12 @@ public class Manche extends Historique<Coup>{
         tourJoueur = 1;
 
     }
-
-    public void clickCarte(){
-        //listerCoups(joueur1, p.jeu.selectedCarte);
-
+    public boolean piocheVide(){
+        if(piocheCartes.size() == 0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void initialiserPioche(){
@@ -67,13 +71,36 @@ public class Manche extends Historique<Coup>{
 
     }
 
+    public void attaque(int j){
+        System.out.println("joueur : " + j);
+
+        if(j == 1){
+            partie.joueur2.vie-= 1;
+        }else{
+            partie.joueur1.vie-= 1;
+        }
+
+        changeTourJoueur(tourJoueur);
+    }
+
     public void remplirMain(JoueurHumain j){
+        for(int i=0;i<j.main.size();i++){
+            if(j.main.get(i) == 0){
+                j.main.remove(i);
+            }
+        }
         while(j.main.size() < 5){
             int carte = pioche();
             j.main.add(carte);
 
         }
         System.out.println("main complete joueur : " + j.main);
+    }
+
+    public void viderMain(JoueurHumain j){
+        for(int i=0;i<j.main.size();i++){
+            j.main.remove(i);
+        }
     }
 
     public int pioche(){ // le joueur récupère une carte dans l
@@ -327,45 +354,11 @@ public class Manche extends Historique<Coup>{
         CaseIHM.get(i).update(i, val, x, y, largeur, hauteur);
     }
 
-    public void updateEtatCaseIHM(int id, int etat){
-        CaseIHM.get(id).updateEtat(etat);
-    }
-
     public ArrayList<SelectionCaseIHM> getCaseIHM() {
         return CaseIHM;
     }
 
     public int getTourJoueur(){ return tourJoueur;}
-
-    public boolean estJ1(int nb){
-        return grilleJeu[nb] == 1;
-    }
-
-    public boolean estJ2(int nb){
-        return grilleJeu[nb] == 2;
-    }
-
-    public boolean estVide(int nb){
-        return grilleJeu[nb] == 0;
-    }
-
-    public boolean testPosition(int target){
-        boolean res = true;
-        if (tourJoueur == 1){
-            if (target > joueur2.position){
-                res = false;
-            }
-        }
-        else
-        {
-            if(target < joueur1.position){
-                res = false;
-            }
-        }
-        return res;
-    }
-
-
 
     public void changeTourJoueur(int tour)
     {

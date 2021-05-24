@@ -290,7 +290,6 @@ public class NiveauGraphique extends JComponent implements Observateur {
     }
 
     public void selectCarte(int val ,int x, int y, int l, int h, Graphics2D drawable){
-
         drawable.drawImage(cartesSel[val-1],x,y,l,h,null);
     }
 

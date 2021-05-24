@@ -5,12 +5,12 @@ import Patterns.Observable;
 
 public class Partie {
     boolean J1Gagnant, J2Gagnant;
-    int J1Point, J2Point;
+    //int J1Point, J2Point;
     Jeu jeu;
     Manche courant;
     JoueurHumain joueur1, joueur2;
-    int[] PointJ1;
-    int[] PointJ2;
+    //int[] PointJ1;
+    //int[] PointJ2;
 
     public Partie(Jeu j){
         jeu = j;
@@ -24,15 +24,20 @@ public class Partie {
         courant = new Manche(this);
         J1Gagnant = false;
         J2Gagnant = false;
-        J1Point = 0;
+        /*J1Point = 0;
         J2Point = 0;
         PointJ1 = new int[5];
-        PointJ2 = new int[5];
+        PointJ2 = new int[5];*/
+    }
+
+    public void initialiseManche(){
+        courant = null;
+        courant = new Manche(this);
     }
 
     public boolean aGagner(){
-        if(J1Point == 5){
-            J1Gagnant = true;
+        if(joueur1.vie == 0){
+            J2Gagnant = true;
             return true;
         }else if(J2Point == 5){
             J2Gagnant = true;
