@@ -15,7 +15,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
     JPanel pan, optionGauche, optionDroit;
     public int hauteurPanel, largeurPanel;
     JButton Niveau, Option, Charger, Quitter, Droit, Gauche;
-    JButton avancer, reculer;
+    //JButton avancer, reculer;
 
     InterfaceGraphique(Jeu j,CollecteurEvenements c){
         jeu = j;
@@ -166,7 +166,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         }
     }
 
-    public void InterfacePartie(){
+    /*public void InterfacePartie(){
         if(niv.Partie){
             frame.add(barreLaterale, BorderLayout.LINE_END);
             frame.revalidate();
@@ -174,7 +174,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
             frame.remove(barreLaterale);
             frame.revalidate();
         }
-    }
+    }*/
 
     //Fonction permettant de mettre a jour les booléens permettant de changer l'affichage de la fenêtre
     //en appelant la fonction changeBackground de NiveauGraphique
@@ -182,7 +182,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         niv.changeBackground(b1, b2, b3);
         InterfaceMenu();
         InterfaceRegles();
-        InterfacePartie();
+        //InterfacePartie();
     }
 
     //Fonction permettant de faire des boutons avec un hover
