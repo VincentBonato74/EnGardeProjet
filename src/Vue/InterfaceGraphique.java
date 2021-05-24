@@ -56,7 +56,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         frame.setSize(1100, 660);
         frame.setVisible(true);
 
-        //Création de la barre lateral se trouvant dans le menu
+        /*//Création de la barre lateral se trouvant dans le menu
         barreLaterale = Box.createVerticalBox();
         barreLaterale.add(Box.createGlue());
 
@@ -64,7 +64,7 @@ public class InterfaceGraphique implements Runnable, Observateur {
         barreLaterale.add(avancer);
 
         reculer = createButton("Reculer","reculer");
-        barreLaterale.add(reculer);
+        barreLaterale.add(reculer);*/
 
 
 
