@@ -15,6 +15,7 @@ public class Manche extends Historique<Coup>{
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     public ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
+    public ButtonIHM boutonChangeTour;
     public int[] grilleJeu;
     public int tourJoueur;
     public JoueurHumain joueur1, joueur2;
@@ -293,7 +294,7 @@ public class Manche extends Historique<Coup>{
         for (int i = 0; i < CaseIHM.size(); i++){
             CaseIHM.get(i).updateEtat(0);
         }
-        changeTourJoueur(tourJoueur);
+        //changeTourJoueur(tourJoueur);
 
     }
 
@@ -382,6 +383,11 @@ public class Manche extends Historique<Coup>{
         SelectionCaseIHM caseI = new SelectionCaseIHM(i, val, x, y, largeur, hauteur, etat);
         CaseIHM.add(caseI);
     }
+
+    public void initButtonChangeTour(int x, int y, int largeur, int hauteur)
+    {
+       boutonChangeTour = new ButtonIHM(1, "ChangeTour", x, y, largeur, hauteur);
+    }
     public void updateCaseIHM(int i, int val, int x, int y, int largeur, int hauteur){
         CaseIHM.get(i).update(i, val, x, y, largeur, hauteur);
     }
@@ -396,10 +402,12 @@ public class Manche extends Historique<Coup>{
     {
         if(tour == 1)
         {
+                remplirMain(joueur1);
                 this.tourJoueur = 2;
         }
         else
         {
+                remplirMain(joueur2);
                 this.tourJoueur = 1;
 
         }

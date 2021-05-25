@@ -8,6 +8,7 @@ public class Partie {
     Jeu jeu;
     Manche courant;
     JoueurHumain joueur1, joueur2;
+    int gagnant;
 
     public Partie(Jeu j){
         jeu = j;
@@ -27,15 +28,27 @@ public class Partie {
 
     public void initialiseManche(){
         courant = null;
-        courant = new Manche(this);
+
+        if(this.aGagner())
+        {
+            System.out.println("Le vainqueur est le joueur " + gagnant);
+
+        }
+        else
+        {
+            courant = new Manche(this);
+        }
+
     }
 
     public boolean aGagner(){
         if(joueur1.vie == 0){
             J2Gagnant = true;
+            gagnant = 2;
             return true;
         }else if(joueur2.vie == 0){
             J1Gagnant = true;
+            gagnant = 1;
             return true;
         }
         return false;

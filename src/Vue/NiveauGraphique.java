@@ -140,6 +140,12 @@ public class NiveauGraphique extends JComponent implements Observateur {
         hauteur = getSize().height;
 
 
+        if (jeu.partie().aGagner()){
+            changeBackground(true, false, false);
+            jeu.initialisePartie();
+        }
+
+
         drawable.clearRect(0, 0, largeur, hauteur);
         if(!Menu && Partie && !Option){
 
@@ -211,6 +217,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
             stopMusique();
             randomDecors();
         }
+
+
 
         PartieSet = true;
         MenuSet = false;
@@ -382,4 +390,18 @@ public class NiveauGraphique extends JComponent implements Observateur {
         Option = b3;
         metAJour();
     }
+
+    public void afficheBoutonChangeTour()
+    {
+        int largeurButton = (int) Math.round(largeur * 0.15);
+        int hauteurButton = (int) Math.round(hauteur * 0.12);
+
+        int x = (int) Math.round(largeur * 0.8);
+        int y = (int) Math.round(hauteur * 0.8);
+
+        jeu.partie().manche().initButtonChangeTour(x, y, largeurButton, hauteurButton);
+
+        drawable.drawImage(ButtonChangeTour, x , y, largeurButton, hauteurButton, null);
+    }
+
 }
