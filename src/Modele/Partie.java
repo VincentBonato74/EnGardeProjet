@@ -5,12 +5,9 @@ import Patterns.Observable;
 
 public class Partie {
     boolean J1Gagnant, J2Gagnant;
-    //int J1Point, J2Point;
     Jeu jeu;
     Manche courant;
     JoueurHumain joueur1, joueur2;
-    //int[] PointJ1;
-    //int[] PointJ2;
 
     public Partie(Jeu j){
         jeu = j;
@@ -26,10 +23,6 @@ public class Partie {
         courant = new Manche(this);
         J1Gagnant = false;
         J2Gagnant = false;
-        /*J1Point = 0;
-        J2Point = 0;
-        PointJ1 = new int[5];
-        PointJ2 = new int[5];*/
     }
 
     public void initialiseManche(){
@@ -52,14 +45,6 @@ public class Partie {
         courant.jouerCoup(cp);
     }
 
-    /*public int getJ1Point(){
-        return J1Point;
-    }
-
-    public int getJ2Point(){
-        return J2Point;
-    }*/
-
     public JoueurHumain Joueur(int numJoueur)
     {
         if(numJoueur == 1)
@@ -76,17 +61,4 @@ public class Partie {
     {
         return  courant;
     }
-
-    /*public void ajoutePoint(int tourJoueur)
-    {
-        if(tourJoueur == 1)
-        {
-            J1Point +=1;
-        }
-        else
-        {
-            J2Point +=1;
-        }
-    }*/
-
 }
