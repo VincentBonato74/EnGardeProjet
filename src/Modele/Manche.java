@@ -1,6 +1,7 @@
 package Modele;
 import java.util.*;
 import Controller.*;
+import Vue.ButtonIHM;
 
 public class Manche extends Historique<Coup>{
 

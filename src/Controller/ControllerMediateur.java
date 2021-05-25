@@ -6,6 +6,7 @@ import Modele.SelectionCaseIHM;
 import Structures.Iterateur;
 import Structures.Sequence;
 import Structures.SequenceListe;
+import Vue.ButtonIHM;
 import Vue.CollecteurEvenements;
 import Vue.InterfaceGraphique;
 import Vue.NiveauGraphique;
@@ -41,7 +42,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
 		for(int i = 0; i < jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().size(); i++){
 			CarteIHM c = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().get(i);
-			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
+			if(x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()) && c.getEtat() != 1){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());

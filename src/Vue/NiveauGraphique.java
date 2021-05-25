@@ -27,6 +27,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
     Image[] joueurs2;
     Image carte1, carte2, carte3, carte4, carte5, carte0;
     Image carte1_select, carte2_select, carte3_select, carte4_select, carte5_select;
+    Image carte1_disabled, carte2_disabled, carte3_disabled, carte4_disabled, carte5_disabled;
+    Image ButtonChangeTour;
     Random r;
     Clip clip;
     Graphics2D drawable;
@@ -34,6 +36,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
     public int compteur;
     Image[] cartes = {};
     Image[] cartesSel = {};
+    Image[] cartesDisabled = {};
 
     //Fonction Permettant de charger une image
     private Image chargeImage(String nom){
@@ -100,6 +103,15 @@ public class NiveauGraphique extends JComponent implements Observateur {
         carte5_select = chargeImage("Carte/Card_5_selected");
         cartesSel = new Image[] {carte1_select, carte2_select, carte3_select, carte4_select, carte5_select};
 
+        carte1_disabled = chargeImage("Carte/Card_1_disabled");
+        carte2_disabled = chargeImage("Carte/Card_2_disabled");
+        carte3_disabled = chargeImage("Carte/Card_3_disabled");
+        carte4_disabled = chargeImage("Carte/Card_4_disabled");
+        carte5_disabled = chargeImage("Carte/Card_5_disabled");
+        cartesDisabled = new Image[] {carte1_disabled, carte2_disabled, carte3_disabled, carte4_disabled, carte5_disabled};
+
+        ButtonChangeTour = chargeImage("Partie/ChangeTour");
+
         //Chargement des images pour Animations
         joueurs1 = new Image[4];
         joueurs2 = new Image[4];
@@ -130,6 +142,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
         drawable.clearRect(0, 0, largeur, hauteur);
         if(!Menu && Partie && !Option){
+
             tracerPartie();
         }else if(Menu && !Partie && !Option){
             tracerMenu();
@@ -273,6 +286,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             selectCarte(jeu.selectedCarte.getValeur(), jeu.selectedCarte.getCoordX(), jeu.selectedCarte.getCoordY(), jeu.selectedCarte.getLargeur(), jeu.selectedCarte.getHauteur(), drawable);
         }
 
+        afficheBoutonChangeTour();
 
     }
 
@@ -302,7 +316,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
 
         int x = (largeur/2)-((nbCartes*largeurCarte)/2)-largeurCarte;
-        int y = (int) Math.round(hauteur * 0.75);
+        int y = (int) Math.round(hauteur * 0.80);
 
 
         for(int i = 0; i < j.main.size(); i++){
@@ -311,11 +325,18 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
 
             x = x+largeurCarte;
-            drawable.drawImage(cartes[valeurCarte], x , y, largeurCarte, hauteurCarte, null);
+
+
             if(j.getCarteI().size() < 5){
                 j.initCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
             } else {
                 j.updateCarteI(i, valeurCarte, x, y, largeurCarte, hauteurCarte);
+            }
+
+            if (j.getCarteI().get(i).getEtat() == 1){
+                drawable.drawImage(cartesDisabled[valeurCarte-1], x , y, largeurCarte, hauteurCarte, null);
+            } else {
+                drawable.drawImage(cartes[valeurCarte], x , y, largeurCarte, hauteurCarte, null);
             }
 
             if (jeu.selectedCarte != null && jeu.selectedCarte.getId() == i){
