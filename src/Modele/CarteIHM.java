@@ -5,12 +5,7 @@ public class CarteIHM {
     int valeur;
     int x, y;
     int largeur, hauteur;
-
-
-    public CarteIHM(int num, int value){
-        id = num;
-        valeur = value;
-    }
+    int etat;
 
 
 
@@ -21,15 +16,9 @@ public class CarteIHM {
         y = Cy;
         largeur = l;
         hauteur = h;
+        etat = 0;
     }
 
-    public CarteIHM(int value, int Cx, int Cy, int l, int h){
-        valeur = value;
-        x = Cx;
-        y = Cy;
-        largeur = l;
-        hauteur = h;
-    }
 
     public void update(int num, int value, int Cx, int Cy, int l, int h){
         id = num;
@@ -47,6 +36,14 @@ public class CarteIHM {
         y = 0;
         largeur = 0;
         hauteur = 0;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
+    }
+
+    public int getEtat() {
+        return etat;
     }
 
     public int getCoordX(){

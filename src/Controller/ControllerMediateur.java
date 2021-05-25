@@ -6,6 +6,7 @@ import Modele.SelectionCaseIHM;
 import Structures.Iterateur;
 import Structures.Sequence;
 import Structures.SequenceListe;
+import Vue.ButtonIHM;
 import Vue.CollecteurEvenements;
 import Vue.InterfaceGraphique;
 import Vue.NiveauGraphique;
@@ -41,7 +42,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
 		for(int i = 0; i < jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().size(); i++){
 			CarteIHM c = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().get(i);
-			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
+			if(x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()) && c.getEtat() != 1){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
@@ -70,7 +71,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 						Coup cp = jeu.determinerCoup(c.getId(), valeurs,jeu.partie().manche().grilleJeu);
 						jeu.jouerCoup(cp);
 						jeu.selectedCarte.reset();
-						jeu.partie().manche().remplirMain(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()));
+
 					} else if (c.getEtat() == 2){
 						jeu.partie().manche().attaque(jeu.partie().manche().getTourJoueur());
 						jeu.selectedCarte = null;
@@ -78,6 +79,17 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 					}
 				}
+			}
+		}
+	}
+
+	public void clickChangeTour(int x, int y)
+	{
+		ButtonIHM but = jeu.partie().manche().boutonChangeTour;
+		if (x >= but.getX() && x < but.getX() + but.getLargeur()){
+			if (y >= but.getY() && y < but.getY() + but.getHauteur()){
+				jeu.partie().manche().changeTourJoueur(jeu.partie().manche().tourJoueur);
+				System.out.println("Je change le tour");
 			}
 		}
 	}
