@@ -66,7 +66,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             clip = AudioSystem.getClip();
             clip.open(input);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-30.0f);
+            gainControl.setValue(-80.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             //gainControl.setValue(0.0f);
         } catch (Exception e) {
@@ -248,7 +248,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         //affichage de la tete et du nom des deux joueurs
         drawable.drawImage(teteJ1, xTeteGauche, yTete, dimensionTete ,dimensionTete,null);
         drawable.drawImage(teteJ2, xTeteDroite, yTete, dimensionTete ,dimensionTete,null);
-        drawable.drawImage(NomJ1, xPointGauche+(1*xTeteGauche), yNom, largeurNom, hauteurNom, null);
+        drawable.drawImage(NomJ1, xPointGauche+xTeteGauche, yNom, largeurNom, hauteurNom, null);
         drawable.drawImage(NomJ2, xPointDroit-(5*xTeteGauche), yNom, largeurNom, hauteurNom, null);
 
         // affichage des barres de vie à partir de la santé de chaque joueur
@@ -357,7 +357,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
     public void affichePossibilites(Graphics2D drawable){
         ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
-        CaseIHM = jeu.partie().manche().CaseIHM;;
+        CaseIHM = jeu.partie().manche().CaseIHM;
         for(int i = 0; i< CaseIHM.size(); i++)
         {
             int etat = CaseIHM.get(i).getEtat();

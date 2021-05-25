@@ -23,9 +23,9 @@ public class Jeu extends Observable {
         return courant;
     }
 
-    public Coup determinerCoup(int type, int[] valeurs, int[] grilleJeu)
+    public Coup determinerCoup(int type, int[] valeurs, int[] grilleJeu, int typeAction)
     {
-        return courant.manche().joue(type, valeurs, grilleJeu);
+        return courant.manche().joue(type, valeurs, grilleJeu,typeAction );
     }
 
     public void jouerCoup(Coup cp) {
@@ -40,7 +40,7 @@ public class Jeu extends Observable {
 
     public void SelectionCarte(int id, int val ,int x, int y, int l, int h) {
         ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
-        CaseIHM = partie().manche().CaseIHM;;
+        CaseIHM = partie().manche().CaseIHM;
         for (int i = 0; i < CaseIHM.size(); i++){
             partie().manche().CaseIHM.get(i).updateEtat(0);
         }
