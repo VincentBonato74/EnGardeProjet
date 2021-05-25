@@ -72,7 +72,8 @@ public class ControllerMediateur implements CollecteurEvenements {
 						jeu.selectedCarte.reset();
 						jeu.partie().manche().remplirMain(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()));
 					} else if (c.getEtat() == 2){
-						jeu.partie().manche().attaque(joueurCourant);
+						jeu.partie().manche().attaque(jeu.partie().manche().getTourJoueur());
+						jeu.selectedCarte = null;
 						jeu.partie().initialiseManche();
 
 					}
