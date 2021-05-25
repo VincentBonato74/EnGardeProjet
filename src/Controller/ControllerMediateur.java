@@ -38,17 +38,15 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 
 	public void clickCarte(int x, int y){
-		//System.out.print("joueur: " + jeu.partie().Joueur(joueurCourant).carteI + "\n");
-		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
-		for(int i = 0; i < jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().size(); i++){
-			CarteIHM c = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().get(i);
+
+		JoueurHumain joueur = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur());
+		for(int i = 0; i < joueur.getCarteI().size(); i++){
+			CarteIHM c = joueur.getCarteI().get(i);
 			if(x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()) && c.getEtat() != 1){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
-
-					 jeu.partie().manche().listerCoups(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), jeu.selectedCarte);
-
+					 jeu.partie().manche().listerCoups(joueur, jeu.selectedCarte);
 
 				}
 			}

@@ -139,8 +139,18 @@ public class Manche extends Historique<Coup>{
                 partie.initialiseManche();
             }else if(Pj2 < Pj1){
                 attaque(Pj1);
+                partie.initialiseManche();
             } else if(Pj1 == Pj2){
+                int PosJ1 = joueur1.getPosition();
+                int PosJ2 = NOMBRE_CASES - joueur1.getPosition();
 
+                if (PosJ1 > PosJ2){
+                    attaque(Pj2);
+                    partie.initialiseManche();
+                } else {
+                    attaque(Pj1);
+                    partie.initialiseManche();
+                }
             }
 
             return 0;
