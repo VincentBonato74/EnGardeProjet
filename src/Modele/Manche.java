@@ -1,6 +1,7 @@
 package Modele;
 import java.util.*;
 import Controller.*;
+import Vue.ButtonIHM;
 
 public class Manche extends Historique<Coup>{
 
@@ -14,6 +15,7 @@ public class Manche extends Historique<Coup>{
     Partie partie;
     ArrayList<Integer> piocheCartes = new ArrayList<>();
     public ArrayList<SelectionCaseIHM> CaseIHM = new ArrayList<>();
+    public ButtonIHM boutonChangeTour;
     public int[] grilleJeu;
     public int tourJoueur;
     public JoueurHumain joueur1, joueur2;
@@ -80,21 +82,33 @@ public class Manche extends Historique<Coup>{
             partie.joueur1.vie-= 1;
         }
 
-        changeTourJoueur(tourJoueur);
+
     }
 
     public void remplirMain(JoueurHumain j){
         for(int i=0;i<j.main.size();i++){
+
             if(j.main.get(i) == 0){
+
                 j.main.remove(i);
+                i =0;
             }
         }
+
+        if(j.main.size() >0)
+        {
+            if(j.main.get(0) == 0)
+            {
+                j.main.remove(0);
+            }
+        }
+
         while(j.main.size() < 5){
             int carte = pioche();
             j.main.add(carte);
 
         }
-        System.out.println("main complete joueur : " + j.main);
+        System.out.println("main complete joueur " + tourJoueur + " : " + j.main);
     }
 
     public void viderMain(JoueurHumain j){
@@ -125,8 +139,18 @@ public class Manche extends Historique<Coup>{
                 partie.initialiseManche();
             }else if(Pj2 < Pj1){
                 attaque(Pj1);
+                partie.initialiseManche();
             } else if(Pj1 == Pj2){
+                int PosJ1 = joueur1.getPosition();
+                int PosJ2 = NOMBRE_CASES - joueur1.getPosition();
 
+                if (PosJ1 > PosJ2){
+                    attaque(Pj2);
+                    partie.initialiseManche();
+                } else {
+                    attaque(Pj1);
+                    partie.initialiseManche();
+                }
             }
 
             return 0;
@@ -294,10 +318,8 @@ public class Manche extends Historique<Coup>{
         partie.Joueur(tourJoueur).supprMain(partie.jeu.selectedCarte.getId());
 
         //efface les cases select
-        for (int i = 0; i < CaseIHM.size(); i++){
-            CaseIHM.get(i).updateEtat(0);
-        }
-        changeTourJoueur(tourJoueur);
+        updateAll();
+        //changeTourJoueur(tourJoueur);
 
     }
 
@@ -316,10 +338,11 @@ public class Manche extends Historique<Coup>{
     }
 
 
-    public Coup joue(int target, int[] valeurs, int[] grilleJeu){
+    public Coup joue(int target, int[] valeurs, int[] grilleJeu, int typeAction){
         JoueurHumain joueurCourant;
-        Action action = new Action(1, valeurs);
+        Action action = new Action(typeAction, valeurs);
         Coup coupCourant = new Coup(grilleJeu, action);
+        coupCourant.fixerManche(this);
 
         int oldPosJ1 = this.joueur1.getPosition();
         int oldPosJ2 = this.joueur2.getPosition();
@@ -327,16 +350,29 @@ public class Manche extends Historique<Coup>{
 
         //_____________________  Recupérer le joueur courant
 
+
+
         joueurCourant = partie.Joueur(tourJoueur);
 
-        joueurCourant.deplace(target);
-        if (tourJoueur == 1) {
-            this.joueur1 = joueurCourant;
-        } else {
-            this.joueur2 = joueurCourant;
+        if(typeAction == 1)
+        {
+            joueurCourant.deplace(target);
+
+            if (tourJoueur == 1) {
+                this.joueur1 = joueurCourant;
+            } else {
+                this.joueur2 = joueurCourant;
+            }
+
+            miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
+
+
+        }
+        else{
+
+            attaque(tourJoueur);
         }
 
-        miseAJourGrille(oldPosJ1, oldPosJ2, this.joueur1.getPosition(), this.joueur2.getPosition());
 
         return coupCourant;
         //======================================================================= CAS ACTION EST UN DPLACEMENT
@@ -386,6 +422,11 @@ public class Manche extends Historique<Coup>{
         SelectionCaseIHM caseI = new SelectionCaseIHM(i, val, x, y, largeur, hauteur, etat);
         CaseIHM.add(caseI);
     }
+
+    public void initButtonChangeTour(int x, int y, int largeur, int hauteur)
+    {
+       boutonChangeTour = new ButtonIHM(1, "ChangeTour", x, y, largeur, hauteur);
+    }
     public void updateCaseIHM(int i, int val, int x, int y, int largeur, int hauteur){
         CaseIHM.get(i).update(i, val, x, y, largeur, hauteur);
     }
@@ -398,14 +439,29 @@ public class Manche extends Historique<Coup>{
 
     public void changeTourJoueur(int tour)
     {
+        Coup coupPrecedent = coupPrecedent();
+        System.out.println("Id coup precedent : " + coupPrecedent.action.id);
+        if(coupPrecedent.action.id == 2)
+        {
+            System.out.println("Vous devez parer avec une carte de valeur :" + coupPrecedent.action.valeurs[0]);
+        }
         if(tour == 1)
         {
+                remplirMain(joueur1);
                 this.tourJoueur = 2;
         }
         else
         {
+                remplirMain(joueur2);
                 this.tourJoueur = 1;
 
+        }
+    }
+
+    public void updateAll()
+    {
+        for (int i = 0; i < CaseIHM.size(); i++){
+            CaseIHM.get(i).updateEtat(0);
         }
     }
 

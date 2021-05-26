@@ -12,11 +12,20 @@ public class Historique<E extends Commande> {
     }
 
     void nouveau(Coup c){
+        System.out.println("Coup : " + c);
         CoupFait.insereTete(c);
         //c.execute(c);
         while(!CoupAnnuler.estVide()){
             CoupAnnuler.extraitTete();
         }
+    }
+
+    public Coup coupPrecedent()
+    {
+        Coup c = CoupFait.extraitTete();
+        CoupFait.insereTete(c);
+
+        return c;
     }
 
     public boolean peutRefaire(){

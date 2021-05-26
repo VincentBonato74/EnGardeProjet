@@ -6,6 +6,7 @@ import Modele.SelectionCaseIHM;
 import Structures.Iterateur;
 import Structures.Sequence;
 import Structures.SequenceListe;
+import Vue.ButtonIHM;
 import Vue.CollecteurEvenements;
 import Vue.InterfaceGraphique;
 import Vue.NiveauGraphique;
@@ -37,17 +38,15 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 
 	public void clickCarte(int x, int y){
-		//System.out.print("joueur: " + jeu.partie().Joueur(joueurCourant).carteI + "\n");
-		//System.out.println("test : " + jeu.partie().Joueur(joueurCourant).getCarteI().size());
-		for(int i = 0; i < jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().size(); i++){
-			CarteIHM c = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()).getCarteI().get(i);
-			if((x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()))){
+
+		JoueurHumain joueur = jeu.partie().Joueur(jeu.partie().manche().getTourJoueur());
+		for(int i = 0; i < joueur.getCarteI().size(); i++){
+			CarteIHM c = joueur.getCarteI().get(i);
+			if(x >= c.getCoordX() && x <= (c.getCoordX() + c.getLargeur()) && c.getEtat() != 1){
 				if((y >= c.getCoordY() && y <= (c.getCoordY() + c.getHauteur()))){
 
 					 jeu.SelectionCarte(i, c.getValeur(), c.getCoordX(), c.getCoordY(), c.getLargeur(), c.getHauteur());
-
-					 jeu.partie().manche().listerCoups(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), jeu.selectedCarte);
-
+					 jeu.partie().manche().listerCoups(joueur, jeu.selectedCarte);
 
 				}
 			}
@@ -67,13 +66,20 @@ public class ControllerMediateur implements CollecteurEvenements {
 					if (c.getEtat() == 1){
 						int[] valeurs= new int[5];
 						valeurs[0] = jeu.selectedCarte.getValeur();
-						Coup cp = jeu.determinerCoup(c.getId(), valeurs,jeu.partie().manche().grilleJeu);
+						Coup cp = jeu.determinerCoup(c.getId(), valeurs,jeu.partie().manche().grilleJeu, 1);
 						jeu.jouerCoup(cp);
 						jeu.selectedCarte.reset();
-						jeu.partie().manche().remplirMain(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()));
+
 					} else if (c.getEtat() == 2){
-						jeu.partie().manche().attaque(jeu.partie().manche().getTourJoueur());
+						int[] valeurs = new int[5];
+						valeurs[0] = jeu.selectedCarte.getValeur();
+						Coup cp = jeu.determinerCoup(c.getId(), valeurs, jeu.partie().manche().grilleJeu, 2);
+						jeu.jouerCoup(cp);
+
 						jeu.selectedCarte = null;
+
+						//jeu.partie().manche().updateAll();
+						jeu.partie().manche().changeTourJoueur(jeu.partie().manche().getTourJoueur());
 						jeu.partie().initialiseManche();
 
 					}
@@ -82,23 +88,21 @@ public class ControllerMediateur implements CollecteurEvenements {
 		}
 	}
 
-	public void avancer()
+	public void clickChangeTour(int x, int y)
 	{
-		int[] valeurs= new int[5];
-		valeurs[0] = jeu.selectedCarte.getValeur();
-		Coup cp = jeu.determinerCoup(1, valeurs,jeu.partie().manche().grilleJeu);
-		jeu.jouerCoup(cp);
-		jeu.selectedCarte.reset();
+		if(jeu.partie().manche().boutonChangeTour != null)
+		{
+			ButtonIHM but = jeu.partie().manche().boutonChangeTour;
+			if (x >= but.getX() && x < but.getX() + but.getLargeur()){
+				if (y >= but.getY() && y < but.getY() + but.getHauteur()){
+					jeu.partie().manche().changeTourJoueur(jeu.partie().manche().tourJoueur);
+					jeu.selectedCarte = null;
+					jeu.partie().manche().updateAll();
+					System.out.println("Je change le tour");
+				}
+			}
+		}
 
-	}
-
-	public void reculer()
-	{
-		int[] valeurs= new int[5];
-		valeurs[0] = jeu.selectedCarte.getValeur();
-		Coup cp = jeu.determinerCoup(2, valeurs,jeu.partie().manche().grilleJeu);
-		jeu.jouerCoup(cp);
-		jeu.selectedCarte.reset();
 	}
 
 
@@ -163,14 +167,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 				break;
 			case "fullscreen":
 				break;
-			case "avancer":
-				avancer();
 
-				//System.out.println("Tour du Joueur (3) :" + jeu.partie().manche().getTourJoueur());
-				break;
-			case "reculer":
-				reculer();
-				break;
 			default:
 				return false;
 		}
