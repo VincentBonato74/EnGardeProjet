@@ -194,7 +194,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 				inter.changeBackground(true, false, false, false);
 				break;
 			case "PartieLance":
-				Jeu jeu = new Jeu(inter.niv().compteurJ1, inter.niv().compteurJ2, inter.niv().compteurMap);
+				Jeu jeu = new Jeu();
 				inter.changeBackground(false, true, false, false);
 			case "Suivant":
 				if(inter.niv().compteur < 10){

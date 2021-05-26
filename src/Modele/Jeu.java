@@ -9,7 +9,7 @@ public class Jeu extends Observable {
     public CarteIHM selectedCarte;
     public SelectionCaseIHM selectedCase;
 
-    public Jeu(int nbJ1, int nbJ2, int nbMap)
+    public Jeu()
     {
         initialisePartie();
     }
