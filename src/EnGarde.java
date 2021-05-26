@@ -6,7 +6,7 @@ public class EnGarde {
 
     public static void main(String [] args) {
         try {
-            Jeu j = new Jeu();
+            Jeu j = new Jeu(0, 1, 0);
             ControllerMediateur c = new ControllerMediateur(j);
             InterfaceGraphique.demarrer(j, c);
         } catch (Exception e) {

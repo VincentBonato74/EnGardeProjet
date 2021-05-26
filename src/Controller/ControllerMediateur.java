@@ -25,9 +25,9 @@ public class ControllerMediateur implements CollecteurEvenements {
 	public ControllerMediateur(Jeu j){
 		jeu = j;
 		animations = new SequenceListe<>();
-		Joueur1 = j.partie().Joueur(1);
-		Joueur2 = j.partie().Joueur(2);
 		joueurCourant = 1; //jeu.partie().getTourJoueur();
+		Joueur1 = jeu.partie().Joueur(1);
+		Joueur2 = jeu.partie().Joueur(2);
 	}
 
 	public void fixerInterfaceGraphique(InterfaceGraphique i){
@@ -82,8 +82,48 @@ public class ControllerMediateur implements CollecteurEvenements {
 		}
 	}
 
-	public void avancer()
-	{
+	public void clickChange(int x, int y){
+		if((y >= inter.niv().yBouton && y <= (inter.niv().yBouton + inter.niv().tailleBouton))){
+			System.out.println("Salut y");
+			if((x >= inter.niv().xBouton1 && x <= (inter.niv().xBouton1 + inter.niv().tailleBouton))) {
+				System.out.println("Salut x1");
+				if(inter.niv().compteurJ1 == 0){
+					inter.niv().compteurJ1 = 1;
+				}else{
+					inter.niv().compteurJ1--;
+				}
+			}else if((x >= inter.niv().xBouton2 && x <= (inter.niv().xBouton2 + inter.niv().tailleBouton))) {
+				System.out.println("Salut x2");
+				inter.niv().compteurJ1 = (inter.niv().compteurJ1+1)%2;
+			}else if((x >= inter.niv().xBouton3 && x <= (inter.niv().xBouton3 + inter.niv().tailleBouton))){
+				System.out.println("Salut x3");
+				if(inter.niv().compteurJ2 == 0){
+					inter.niv().compteurJ2 = 1;
+				}else{
+					inter.niv().compteurJ2--;
+				}
+			}else if((x >= inter.niv().xBouton4 && x <= (inter.niv().xBouton4 + inter.niv().tailleBouton))){
+				System.out.println("Salut x4");
+				inter.niv().compteurJ2 = (inter.niv().compteurJ2+1)%2;
+			}else if((x >= inter.niv().xBouton5 && x <= (inter.niv().xBouton5 + inter.niv().tailleBouton))){
+				System.out.println("Salut x5");
+				if(inter.niv().compteurMap == 0){
+					inter.niv().compteurMap = 7;
+				}else{
+					inter.niv().compteurMap--;
+				}
+			}else if((x >= inter.niv().xBouton6 && x <= (inter.niv().xBouton6 + inter.niv().tailleBouton))){
+				System.out.println("Salut x6");
+				inter.niv().compteurMap = (inter.niv().compteurMap+1)%8;
+			}
+		}
+		System.out.println(inter.niv().compteurJ1);
+		System.out.println(inter.niv().compteurJ2);
+		System.out.println(inter.niv().compteurMap);
+		inter.niv().metAJour();
+	}
+
+	public void avancer() {
 		int[] valeurs= new int[5];
 		valeurs[0] = jeu.selectedCarte.getValeur();
 		Coup cp = jeu.determinerCoup(1, valeurs,jeu.partie().manche().grilleJeu);
@@ -92,8 +132,7 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 	}
 
-	public void reculer()
-	{
+	public void reculer() {
 		int[] valeurs= new int[5];
 		valeurs[0] = jeu.selectedCarte.getValeur();
 		Coup cp = jeu.determinerCoup(2, valeurs,jeu.partie().manche().grilleJeu);
@@ -106,6 +145,12 @@ public class ControllerMediateur implements CollecteurEvenements {
 	public void tictac(){
 		if(inter.getMenu()){
 			inter.MAJPanelMenu();
+		}
+		if (inter.getRegles()) {
+			inter.MAJPanelRegle();
+		}
+		if(inter.getNewPartie()){
+			inter.MAJPanelNewPartie();
 		}
 		Iterateur<Animation> it = animations.iterateur();
 		while(it.aProchain()){
@@ -137,17 +182,20 @@ public class ControllerMediateur implements CollecteurEvenements {
 	}
 
     @Override
-    public boolean commande(String c)
-    {
+    public boolean commande(String c) {
         switch (c) {
-			case "Niveau":
-				inter.changeBackground(false, true, false);
+			case "NewPartie":
+				inter.changeBackground(false, false, false, true);
 				break;
-			case "Option":
-				inter.changeBackground(false, false, true);
+			case "Regles":
+				inter.changeBackground(false, false, true, false);
 				break;
-			case "Regle":
+			case "RetourMenu":
+				inter.changeBackground(true, false, false, false);
 				break;
+			case "PartieLance":
+				Jeu jeu = new Jeu(inter.niv().compteurJ1, inter.niv().compteurJ2, inter.niv().compteurMap);
+				inter.changeBackground(false, true, false, false);
 			case "Suivant":
 				if(inter.niv().compteur < 10){
 					inter.niv().compteur++;

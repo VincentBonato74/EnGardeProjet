@@ -19,24 +19,21 @@ import java.util.Random;
 
 public class NiveauGraphique extends JComponent implements Observateur {
     Jeu jeu;
-    Image fondMenu, fond, joueur1, joueur2, sol, map, teteJ1, teteJ2, TiretBleu, TiretRouge, NomJ1, NomJ2;
-    int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurNom, largeurNom;
-    int hauteurCase, hauteurLuke, hauteurVador, largeurVador, yPoint, xPointGauche, xPointDroit, hauteurTiret, largeurTiret, yNom, xNom;
-    int hauteur2, largeur2;
+    Image flecheDroit, flecheGauche, fondMenu, fond, fondNewPartie, joueur1, joueur1Choix, joueur2Choix, joueur2, sol, map, teteJ1, teteJ2, TiretBleu, TiretRouge, NomJ1, NomJ2, carte1, carte2, carte3, carte4, carte5, carte0, carte1_select, carte2_select, carte3_select, carte4_select, carte5_select, Map0, Map1, Map2, Map3, Map4, Map5, Map6, Map7;
+    int dimensionTete, xTeteDroite, xTeteGauche, yTete, etape, largeur, hauteur, nbColonnes, largeurCase, hauteurNom, largeurNom, hauteurCase, hauteurLuke, hauteurVador, largeurVador, yPoint, xPointGauche, xPointDroit, hauteurTiret, largeurTiret, yNom, xNom;
+    public int tailleBouton, xBouton1, yBouton, xBouton2, xBouton3, xBouton4, xBouton5, xBouton6, compteurJ1, compteurJ2, compteurMap;
     Image[] joueurs1;
     Image[] joueurs2;
-    Image carte1, carte2, carte3, carte4, carte5, carte0;
-    Image carte1_select, carte2_select, carte3_select, carte4_select, carte5_select;
     Random r;
     Clip clip;
     Graphics2D drawable;
-    boolean Menu, Partie, Option, PartieSet, MenuSet, OptionSet;
+    boolean Menu, Partie, Regles, NewPartie, PartieSet, MenuSet, ReglesSet, NewPartieSet;
     public int compteur;
     Image[] cartes = {};
     Image[] cartesSel = {};
 
     //Fonction Permettant de charger une image
-    private Image chargeImage(String nom){
+    public Image chargeImage(String nom){
         Image img = null;
         try{
             InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream(nom + ".png");
@@ -51,15 +48,41 @@ public class NiveauGraphique extends JComponent implements Observateur {
     }
 
     //Fonction qui choisi un décors au hasard et choisi le sol et la musique associée.
-    public void randomDecors(){
+    /*public void randomDecors(){
         Random r = new Random();
         int nb = r.nextInt(8);
         int nb2 = nb%4;
         map = chargeImage("Map/Map"+nb);
         sol = chargeImage("Sol/Sol"+nb2);
-        //Gestion Musique
+        //Gestion Musique en fonction du décors choisi
         try {
             AudioInputStream input = AudioSystem.getAudioInputStream(new File("res/Music/Duel"+nb+".wav"));
+            clip = AudioSystem.getClip();
+            clip.open(input);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-30.0f);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            //gainControl.setValue(0.0f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    public void setDecors(){
+        teteJ1 = chargeImage("Sprite"+compteurJ1+"/Head");
+        teteJ2 = chargeImage("Sprite"+compteurJ2+"/Head");
+
+        map = chargeImage("Map/Map"+compteurMap);
+        sol = chargeImage("Sol/Sol"+compteurMap%2);
+
+
+        for(int i = 0; i < 4; i++){
+            joueurs1[i] = chargeImage("Sprite"+compteurJ1+"/stand_0"+i);
+            joueurs2[i] = chargeImage("Sprite"+compteurJ2+"/stand_0"+i);
+        }
+
+        try {
+            AudioInputStream input = AudioSystem.getAudioInputStream(new File("res/Music/Duel"+compteurMap+".wav"));
             clip = AudioSystem.getClip();
             clip.open(input);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -76,11 +99,14 @@ public class NiveauGraphique extends JComponent implements Observateur {
         nbColonnes = 23;
 
         //Chargement des images
-        teteJ1 = chargeImage("Luke/Head");
-        teteJ2 = chargeImage("Vador/Head");
+        teteJ1 = chargeImage("Sprite0/Head");
+        teteJ2 = chargeImage("Sprite1/Head");
         TiretBleu = chargeImage("Partie/TiretBleu");
         TiretRouge = chargeImage("Partie/TiretRouge");
         fondMenu = chargeImage("Menu/MenuDroit");
+        flecheDroit = chargeImage("Menu/Flèche");
+        flecheGauche = chargeImage("Menu/FlècheReverse");
+        fondNewPartie = chargeImage("Menu/MenuHaut");
         fond = chargeImage("Menu/Menu");
         NomJ1 = chargeImage("Partie/NomJ1");
         NomJ2 = chargeImage("Partie/NomJ2");
@@ -104,8 +130,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         joueurs1 = new Image[4];
         joueurs2 = new Image[4];
         for(int i = 0; i < 4; i++){
-            joueurs1[i] = chargeImage("Luke/stand_0"+i);
-            joueurs2[i] = chargeImage("Vador/stand_0"+i);
+            joueurs1[i] = chargeImage("Sprite0/stand_0"+i);
+            joueurs2[i] = chargeImage("Sprite1/stand_0"+i);
         }
 
         etape = 0;
@@ -115,11 +141,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
         //initialisation des booléens pour savoir dans quel page on est.
         Menu = true;
         Partie = false;
-        Option = false;
+        Regles = false;
 
         //initialisation de booléen pour savoir quand est ce qu'il faut démarrez ou arrêter la musique
         PartieSet = false;
         MenuSet = false;
+        ReglesSet = false;
+        NewPartieSet = false;
     }
 
     public void paintComponent(Graphics g){
@@ -129,12 +157,14 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
 
         drawable.clearRect(0, 0, largeur, hauteur);
-        if(!Menu && Partie && !Option){
+        if(Partie){
             tracerPartie();
-        }else if(Menu && !Partie && !Option){
+        }else if(Menu){
             tracerMenu();
-        }else if(!Menu && !Partie && Option){
+        }else if(Regles){
             tracerRegles();
+        }else if(NewPartie){
+            tracerNewPartie();
         }
     }
 
@@ -145,7 +175,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             clip = AudioSystem.getClip();
             clip.open(input);
             FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-80.0f);
+            gainControl.setValue(-30.0f);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,6 +197,8 @@ public class NiveauGraphique extends JComponent implements Observateur {
         }
         PartieSet = false;
         MenuSet = true;
+        ReglesSet = false;
+        NewPartieSet = false;
 
         largeurNom = (int)Math.round(largeur*0.30);
         hauteurNom = (int)Math.round(hauteur*0.25);
@@ -196,11 +228,14 @@ public class NiveauGraphique extends JComponent implements Observateur {
     public void tracerPartie(){
         if(!PartieSet){
             stopMusique();
-            randomDecors();
+            setDecors();
+            //randomDecors();
         }
 
         PartieSet = true;
         MenuSet = false;
+        ReglesSet = false;
+        NewPartieSet = false;
 
         largeurCase = largeur / nbColonnes;
         hauteurCase = (int)Math.round(largeurCase*0.35);
@@ -226,7 +261,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         drawable.drawImage(map, 0, 0, largeur, hauteur, null);
         //affichage de la tete et du nom des deux joueurs
         drawable.drawImage(teteJ1, xTeteGauche, yTete, dimensionTete ,dimensionTete,null);
-        drawable.drawImage(teteJ2, xTeteDroite, yTete, dimensionTete ,dimensionTete,null);
+        drawable.drawImage(teteJ2, xTeteDroite+dimensionTete, yTete, -dimensionTete ,dimensionTete,null);
         drawable.drawImage(NomJ1, xPointGauche+(1*xTeteGauche), yNom, largeurNom, hauteurNom, null);
         drawable.drawImage(NomJ2, xPointDroit-(5*xTeteGauche), yNom, largeurNom, hauteurNom, null);
 
@@ -246,7 +281,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
             drawable.drawImage(TiretRouge, xPointDroit-((i+1)*xTeteGauche), yPoint, largeurTiret, hauteurTiret, null);
         }
 
-        for(int c = 0; c < jeu.partie().manche().NOMBRE_CASES; c++){
+        for(int c = 0; c < 23; c++){
             int x = c * largeurCase;
             int y = (int) Math.round(hauteur * 0.62);
 
@@ -274,6 +309,56 @@ public class NiveauGraphique extends JComponent implements Observateur {
         }
 
 
+    }
+
+    //Fonction qui trace les différents éléments graphique de la partie.
+    public void tracerNewPartie(){
+        drawable.clearRect(0, 0, largeur, hauteur);
+        drawable.drawImage(fondNewPartie, 0,0,largeur, hauteur, null);
+
+        if(!NewPartieSet){
+            compteurJ1 = 0;
+            compteurJ2 = 1;
+            compteurMap = 0;
+            NewPartieSet = true;
+        }
+
+
+        hauteurLuke = (int)Math.round(largeur * 0.1);
+        hauteurVador = (int)Math.round(largeur * 0.15);
+        largeurVador = (int)Math.round(largeur * 0.15);
+
+        tailleBouton = largeurVador/4;
+        yBouton = (int)Math.round(hauteur*0.1)+(hauteurVador/2);
+        xBouton1 = (int)Math.round((largeur*0.1)+(largeurVador*0.75));
+        xBouton2 = (int)Math.round((largeur*0.1)-(largeurVador*0.40));
+        xBouton3 = (int)Math.round((largeur*0.9)+(largeurVador*0.25));
+        xBouton4 = (int)Math.round((largeur*0.9)-(largeurVador*1.1));
+        xBouton5 = (int)Math.round((largeur*0.35)-largeurVador*0.35);
+        xBouton6 = (int)Math.round((largeur*0.35)+(largeur*0.315));
+
+
+
+
+        map = chargeImage("Map/MiniMap"+compteurMap);
+        joueur1Choix = chargeImage("Sprite"+compteurJ1+"/stand_00");
+        joueur2Choix = chargeImage("Sprite"+compteurJ2+"/stand_00");
+
+        drawable.drawImage(map, (int)Math.round(largeur*0.35),(int)Math.round(hauteur*0.1),(int)Math.round(largeur*0.30), (int)Math.round(largeur*0.150), null);
+        drawable.drawImage(joueur1Choix, (int)Math.round(largeur*0.1), (int)Math.round(hauteur*0.1), largeurVador, hauteurVador, null);
+        drawable.drawImage(joueur2Choix, (int)Math.round(largeur*0.9), (int)Math.round(hauteur*0.1), -largeurVador, hauteurVador, null);
+
+        //Flèche Joueur 1
+        drawable.drawImage(flecheDroit, xBouton1 , yBouton, tailleBouton, tailleBouton, null);
+        drawable.drawImage(flecheGauche, xBouton2 , yBouton, tailleBouton, tailleBouton, null);
+
+        //Flèche Joueur 2
+        drawable.drawImage(flecheDroit, xBouton3 , yBouton, tailleBouton, tailleBouton, null);
+        drawable.drawImage(flecheGauche, xBouton4 , yBouton, tailleBouton, tailleBouton, null);
+
+        //Flèche Map
+        drawable.drawImage(flecheGauche, xBouton5, yBouton, tailleBouton, tailleBouton, null);
+        drawable.drawImage(flecheDroit, xBouton6, yBouton, tailleBouton, tailleBouton, null);
     }
 
     @Override
@@ -355,10 +440,11 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
     //Fonction qui met à jour les booléens pour changer l'affichage de la fenêtre en fonction de la page
     //que l'on veut afficher
-    public void changeBackground(boolean b1, boolean b2, boolean b3) {
+    public void changeBackground(boolean b1, boolean b2, boolean b3, boolean b4) {
         Menu = b1;
         Partie = b2;
-        Option = b3;
+        Regles = b3;
+        NewPartie = b4;
         metAJour();
     }
 }

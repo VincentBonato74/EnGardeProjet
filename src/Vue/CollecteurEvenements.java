@@ -6,4 +6,5 @@ public interface CollecteurEvenements {
     void clickDeplacement(int x, int y);
     boolean commande(String c);
     void fixerInterfaceGraphique(InterfaceGraphique i);
+    void clickChange(int x, int y);
 }

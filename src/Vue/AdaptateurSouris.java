@@ -16,6 +16,9 @@ public class AdaptateurSouris extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         control.clickCarte(e.getX(), e.getY());
         control.clickDeplacement(e.getX(), e.getY());
+        if(niv.NewPartie){
+            control.clickChange(e.getX(), e.getY());
+        }
     }
 
 }
