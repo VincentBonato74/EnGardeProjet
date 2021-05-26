@@ -180,7 +180,8 @@ public class Manche extends Historique<Coup>{
             if(newPos <= 22){
                 if(newPos == joueur2.position ){
                     CaseIHM.get(newPos).updateEtat(2);
-                    System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
+                    //System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
+                    peutAttaquer(carte, j.getPosition(), j);
                 }else if(newPos < joueur2.position){
                     System.out.println("peut avancer en " + newPos);
                     peutAttaquer(carte, newPos, j);
@@ -204,8 +205,9 @@ public class Manche extends Historique<Coup>{
             newPos = j.position - valeurCarte;
             if(newPos >= 0){
                 if(newPos == joueur1.position ){
-                    System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
+                    //System.out.println("peut attaquer le joueur avec carte " + valeurCarte);
                     CaseIHM.get(newPos).updateEtat(2);
+                    peutAttaquer(carte, j.getPosition(), j);
                 }else if(newPos > joueur1.position){
                     System.out.println("peut avancer en " + newPos);
                     if(peutAttaquer(carte, newPos, j)){
@@ -287,6 +289,9 @@ public class Manche extends Historique<Coup>{
             }else{
                 int nbAtk = 0;
                 int valCarte = 0;
+                if(carte.getValeur() == distance){
+                    nbAtk++;
+                }
                 for(int i=0;i<5;i++){
                     if(i != carte.getId()){
                         if(distance == j.main.get(i)){
