@@ -65,19 +65,37 @@ public class ControllerMediateur implements CollecteurEvenements {
 
 					if (c.getEtat() == 1){
 						int[] valeurs= new int[5];
-						valeurs[0] = jeu.selectedCarte.getValeur();
+						valeurs[0] = jeu.selectedCarte.get(0).getValeur();
 						Coup cp = jeu.determinerCoup(c.getId(), valeurs,jeu.partie().manche().grilleJeu, 1);
 						jeu.jouerCoup(cp);
-						jeu.selectedCarte.reset();
+
+						for(int j =0; j<jeu.selectedCarte.size();j ++)
+						{
+							jeu.selectedCarte.get(0).reset();
+						}
+
 
 					} else if (c.getEtat() == 2){
 						int[] valeurs = new int[5];
-						valeurs[0] = jeu.selectedCarte.getValeur();
+
+						for(int j = 0; j<jeu.selectedCarte.size(); j++)
+						{
+							valeurs[j] = jeu.selectedCarte.get(j).getValeur();
+						}
+
 						Coup cp = jeu.determinerCoup(c.getId(), valeurs, jeu.partie().manche().grilleJeu, 2);
 						jeu.jouerCoup(cp);
 
-						jeu.selectedCarte = null;
+						for(int f = 0; f<jeu.selectedCarte.size(); f++)
+						{
+							jeu.selectedCarte.remove(f);
+							f=0;
+						}
 
+						if(jeu.selectedCarte.size()>0)
+						{
+							jeu.selectedCarte.remove(0);
+						}
 						//jeu.partie().manche().updateAll();
 						jeu.partie().manche().changeTourJoueur(jeu.partie().manche().getTourJoueur());
 						jeu.partie().initialiseManche();
@@ -96,7 +114,18 @@ public class ControllerMediateur implements CollecteurEvenements {
 			if (x >= but.getX() && x < but.getX() + but.getLargeur()){
 				if (y >= but.getY() && y < but.getY() + but.getHauteur()){
 					jeu.partie().manche().changeTourJoueur(jeu.partie().manche().tourJoueur);
-					jeu.selectedCarte = null;
+
+					for(int f = 0; f<jeu.selectedCarte.size(); f++)
+					{
+						jeu.selectedCarte.remove(f);
+						f=0;
+					}
+
+					if(jeu.selectedCarte.size()>0)
+					{
+						jeu.selectedCarte.remove(0);
+					}
+
 					jeu.partie().manche().updateAll();
 					System.out.println("Je change le tour");
 				}

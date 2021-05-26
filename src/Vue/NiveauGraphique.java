@@ -290,8 +290,13 @@ public class NiveauGraphique extends JComponent implements Observateur {
 
         afficheMainJoueur(jeu.partie().Joueur(jeu.partie().manche().getTourJoueur()), drawable);
 
-        if(jeu.selectedCarte != null && jeu.selectedCarte.getId() != -1)      {
-            selectCarte(jeu.selectedCarte.getValeur(), jeu.selectedCarte.getCoordX(), jeu.selectedCarte.getCoordY(), jeu.selectedCarte.getLargeur(), jeu.selectedCarte.getHauteur(), drawable);
+        if(jeu.selectedCarte.size()>0 && jeu.selectedCarte.get(0).getId() != -1)      {
+
+            for(int i = 0; i<jeu.selectedCarte.size() ; i++)
+            {
+                selectCartes(jeu.selectedCarte.get(i).getValeur(), jeu.selectedCarte.get(i).getCoordX(), jeu.selectedCarte.get(i).getCoordY(), jeu.selectedCarte.get(i).getLargeur(), jeu.selectedCarte.get(i).getHauteur(), drawable);
+            }
+
         }
 
         afficheBoutonChangeTour();
@@ -311,7 +316,7 @@ public class NiveauGraphique extends JComponent implements Observateur {
         metAJour();
     }
 
-    public void selectCarte(int val ,int x, int y, int l, int h, Graphics2D drawable){
+    public void selectCartes(int val ,int x, int y, int l, int h, Graphics2D drawable){
         drawable.drawImage(cartesSel[val-1],x,y,l,h,null);
     }
 
@@ -347,9 +352,9 @@ public class NiveauGraphique extends JComponent implements Observateur {
                 drawable.drawImage(cartes[valeurCarte], x , y, largeurCarte, hauteurCarte, null);
             }
 
-            if (jeu.selectedCarte != null && jeu.selectedCarte.getId() == i){
+            if (jeu.selectedCarte.size()>i && jeu.selectedCarte.get(i).getId() == i){
 
-                jeu.selectedCarte.update(jeu.selectedCarte.getId(), jeu.selectedCarte.getValeur(), x, y, largeurCarte, hauteurCarte);
+                jeu.selectedCarte.get(i).update(jeu.selectedCarte.get(i).getId(), jeu.selectedCarte.get(i).getValeur(), x, y, largeurCarte, hauteurCarte);
             }
 
         }

@@ -22,6 +22,10 @@ public class Historique<E extends Commande> {
 
     public Coup coupPrecedent()
     {
+        if(CoupFait.estVide())
+        {
+            return null;
+        }
         Coup c = CoupFait.extraitTete();
         CoupFait.insereTete(c);
 

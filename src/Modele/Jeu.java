@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Jeu extends Observable {
     Partie courant;
-    public CarteIHM selectedCarte;
+    public ArrayList<CarteIHM> selectedCarte;
     public SelectionCaseIHM selectedCase;
 
     public Jeu()
@@ -16,6 +16,7 @@ public class Jeu extends Observable {
 
     public void initialisePartie(){
         courant = new Partie(this);
+        selectedCarte = new ArrayList<>();
         miseAJour();
     }
 
@@ -44,7 +45,37 @@ public class Jeu extends Observable {
         for (int i = 0; i < CaseIHM.size(); i++){
             partie().manche().CaseIHM.get(i).updateEtat(0);
         }
-        selectedCarte = new CarteIHM(id, val, x, y, l, h);
+
+        int taille = selectedCarte.size();
+
+        if(selectedCarte.size()>0 && id == selectedCarte.get(taille -1).getId())
+        {
+            selectedCarte.remove(taille -1);
+        }
+        else
+        {
+            if(selectedCarte.size()>0 && selectedCarte.get(taille -1).getValeur() == val)
+            {
+                selectedCarte.add(new CarteIHM(id, val, x, y, l, h));
+            }
+            else
+            {
+                for(int i = 0; i<selectedCarte.size(); i++)
+                {
+                    selectedCarte.remove(i);
+                    i =0;
+                }
+
+                if(selectedCarte.size()>0)
+                {
+                    selectedCarte.remove(0);
+                }
+
+                selectedCarte.add(new CarteIHM(id, val, x, y, l, h));
+            }
+        }
+
+
         miseAJour();
     }
 }
