@@ -54,26 +54,39 @@ public class Jeu extends Observable {
         }
         else
         {
-            if(selectedCarte.size()>0 && selectedCarte.get(taille -1).getValeur() == val)
+            boolean peutAjouter = true;
+
+            for(int k =0; k<selectedCarte.size(); k++)
             {
-                selectedCarte.add(new CarteIHM(id, val, x, y, l, h));
+                if(selectedCarte.get(k).getId() == id)
+                {
+                    peutAjouter = false;
+                }
             }
-            else
+            if(peutAjouter)
             {
-                for(int i = 0; i<selectedCarte.size(); i++)
+                if(selectedCarte.size()>0 && selectedCarte.get(taille -1).getValeur() == val)
                 {
-                    selectedCarte.remove(i);
-                    i =0;
+                    selectedCarte.add(new CarteIHM(id, val, x, y, l, h));
                 }
-
-                if(selectedCarte.size()>0)
+                else
                 {
-                    selectedCarte.remove(0);
-                }
+                    for(int i = 0; i<selectedCarte.size(); i++)
+                    {
+                        selectedCarte.remove(i);
+                        i =0;
+                    }
 
-                selectedCarte.add(new CarteIHM(id, val, x, y, l, h));
+                    if(selectedCarte.size()>0)
+                    {
+                        selectedCarte.remove(0);
+                    }
+
+                    selectedCarte.add(new CarteIHM(id, val, x, y, l, h));
+                }
             }
         }
+
 
 
         miseAJour();

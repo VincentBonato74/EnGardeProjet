@@ -224,7 +224,7 @@ public class Manche extends Historique<Coup>{
                 }
             }
         }
-        else //Plusieurs cartes selectionnées
+        else if(cartes.size() > 1)//Plusieurs cartes selectionnées
         {
             int newPos;
             int dir = j.direction;
